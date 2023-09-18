@@ -5,5 +5,8 @@ public class Event {
     private TimeSlot time;
     private String Contact;
 
+public static void main(String [] args){
+    new
+}
 
 }
