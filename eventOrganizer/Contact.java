@@ -1,5 +1,7 @@
 package eventOrganizer;
 
+import java.util.Arrays;
+
 /**
  * Represents contact information of a department.
  * Contains their department and email.
@@ -50,7 +52,10 @@ public class Contact {
      * department exists in Department enum. False otherwise
      */
     public boolean isValid() {
-        return Department.values().contains(department) && this.isEmailValid();
+
+        boolean validEnum = Arrays.stream(Department.values())
+                                  .anyMatch(dep -> department.equals(dep));
+        return validEnum && this.isEmailValid();
 
     }
 }
