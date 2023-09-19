@@ -1,5 +1,6 @@
 package eventOrganizer;
 
+
 /**
  * Class that represents an Event at a certain date, time, location, duration,
  * and contact information of the reserving party.
@@ -87,4 +88,7 @@ public class Event implements Comparable<Event> {
                 this.contact.toString()
         );
     }
-}
+
+
+// hold the contact department
+//maybe a data class
