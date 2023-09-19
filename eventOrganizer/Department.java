@@ -40,7 +40,7 @@ public class Contact {
             }
         }
 
-        return emailDomain.equals("@rutgers.edu");
+        return emailDomain.equals("rutgers.edu");
     }
 
     /**
