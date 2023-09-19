@@ -21,5 +21,3 @@ public enum Location {
         System.out.println(Location.HILL114 + " - " + Location.HILL114.getDescription());
         System.out.println(Location.ARC103 + " - " + Location.ARC103.getDescription());
     }
-
-}
