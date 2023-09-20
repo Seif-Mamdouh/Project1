@@ -1,4 +1,5 @@
 package eventOrganizer;
+
 public enum Location {
     HILL114("Hill Center", "Busch"),
     ARC103("Allison Road Classroom", "Busch"),
@@ -9,6 +10,12 @@ public enum Location {
     private final String buildingName;
     private final String campusName;
 
+    /**
+     * Construct location with a building name and campus name
+     *
+     * @param buildingName name of building associated with location
+     * @param campusName   name of campus associated with location
+     */
     Location(String buildingName, String campusName) {
         this.buildingName = buildingName;
         this.campusName = campusName;
