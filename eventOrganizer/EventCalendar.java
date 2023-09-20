@@ -163,10 +163,9 @@ public class EventCalendar {
                 (event1, event2) -> event1.getLocation()
                                           .compareTo(event2.getLocation());
 
-        EventCalendar.bubbleSort(
-                this.events,
-                this.numEvents,
-                campusBuildingComparator
+        EventCalendar.bubbleSort(this.events,
+                                 this.numEvents,
+                                 campusBuildingComparator
         );
 
         this.print();
@@ -182,15 +181,19 @@ public class EventCalendar {
                                           .compareTo(event2.getContact()
                                                            .getDepartment());
 
-        EventCalendar.bubbleSort(
-                this.events,
-                this.numEvents,
-                departmentComparator
+        EventCalendar.bubbleSort(this.events,
+                                 this.numEvents,
+                                 departmentComparator
         );
 
         this.print();
     }
 
+    /**
+     * unit tests for EventCalendar class
+     *
+     * @param args unused, does not take command line arguments
+     */
     public static void main(String[] args) {
         Event event1 = new Event(new Date(2023, 9, 20),
                                  Timeslot.MORNING,
