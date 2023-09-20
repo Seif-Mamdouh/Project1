@@ -4,7 +4,7 @@ public class EventCalendar {
     private Event[] events; //the array holding the list of events
     private int numEvents; //current number of events in the array
 
-    final static int NOT_FOUND_IN_ARRAY = -1;
+    final static int NOT_FOUND = -1;
     final static int EQUAL_IN_COMPARABLE = 0;
     final static int INITIAL_AND_ADDITIONAL_ARRAY_CAPACITY = 4;
     final static int INITIAL_NUMBER_OF_EVENTS = 0;
@@ -17,10 +17,10 @@ public class EventCalendar {
 
     /**
      * Search all events and return the event's index if it is found.
-     * Returns NOT_FOUND_IN_ARRAY if it is not in the array.
+     * Returns NOT_FOUND if it is not in the array.
      *
      * @param event the event whose index will be found
-     * @return index of event or NOT_FOUND_IN_ARRAY if it is not found
+     * @return index of event or NOT_FOUND if it is not found
      */
     private int find(Event event) {
         for (int i = 0; i < this.numEvents; i++) {
@@ -28,7 +28,7 @@ public class EventCalendar {
                 return i;
             }
         }
-        return EventCalendar.NOT_FOUND_IN_ARRAY;
+        return EventCalendar.NOT_FOUND;
     }
 
     /**
@@ -94,7 +94,7 @@ public class EventCalendar {
      * @return true if it is found, false if it does not exist in the calendar
      */
     public boolean contains(Event event) {
-        return this.find(event) != EventCalendar.NOT_FOUND_IN_ARRAY;
+        return this.find(event) != EventCalendar.NOT_FOUND;
     }
 
     /**
