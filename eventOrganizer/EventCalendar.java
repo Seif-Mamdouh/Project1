@@ -38,7 +38,11 @@ public class EventCalendar {
     private void grow() {
         Event[] newEvents = new Event[this.events.length +
                                       EventCalendar.INITIAL_AND_ADDITIONAL_ARRAY_CAPACITY];
-        System.arraycopy(this.events, 0, newEvents, 0, this.events.length);
+
+        for (int i = 0; i < this.events.length; i++) {
+            newEvents[i] = this.events[i];
+        }
+
         this.events = newEvents;
     }
 
@@ -55,9 +59,6 @@ public class EventCalendar {
         }
         this.events[numEvents] = event;
         this.numEvents++;
-        System.out.println(String.format("added to index %d",
-                                         this.numEvents - 1
-        ));
         return true;
     }
 
@@ -75,14 +76,12 @@ public class EventCalendar {
         }
 
         int indexOfEvent = this.find(event);
-        this.numEvents--;
 
-        System.arraycopy(this.events,
-                         indexOfEvent + 1,
-                         this.events,
-                         indexOfEvent,
-                         this.numEvents - indexOfEvent
-        );
+        for(int i = indexOfEvent + 1; i < this.numEvents; i++){
+            this.events[i - 1] = this.events[i];
+        }
+
+        this.numEvents--;
 
         return true;
     }
