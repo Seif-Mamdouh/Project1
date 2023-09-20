@@ -58,4 +58,13 @@ public class Contact {
         return validEnum && this.isEmailValid();
 
     }
+
+    /**
+     * Get department associated with contact
+     *
+     * @return department
+     */
+    public Department getDepartment() {
+        return department;
+    }
 }

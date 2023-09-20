@@ -135,10 +135,7 @@ public class EventCalendar {
      * prints events ordered by date and timeslot
      */
     public void printByDate() {
-        CustomComparator<Event> dateComparator =
-                (event1, event2) -> event1.getDate()
-                                          .compareTo(event2.getDate());
-        EventCalendar.bubbleSort(this.events, dateComparator);
+        EventCalendar.bubbleSort(this.events, Event::compareTo);
 
         this.print();
 
@@ -149,8 +146,12 @@ public class EventCalendar {
      */
     public void printByCampus() {
         CustomComparator<Event> campusBuildingComparator =
-                (event1, event2) -> event1.getCampus()
-                                          .compareTo(event2.getCampus());
+                (event1, event2) -> event1.getLocation()
+                                          .toString()
+                                          .compareTo(event2.getLocation()
+                                                           .toString()
+                                          );
+
         EventCalendar.bubbleSort(this.events, campusBuildingComparator);
 
         this.print();
@@ -161,8 +162,14 @@ public class EventCalendar {
      */
     public void printByDepartment() {
         CustomComparator<Event> departmentComparator =
-                (event1, event2) -> event1.getDepartment()
-                                          .compareTo(event2.getDepartment());
+                (event1, event2) -> event1.getContact()
+                                          .getDepartment()
+                                          .toString()
+                                          .compareTo(event2.getContact()
+                                                           .getDepartment()
+                                                           .toString()
+                                          );
+
         EventCalendar.bubbleSort(this.events, departmentComparator);
 
         this.print();
