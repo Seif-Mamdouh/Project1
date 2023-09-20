@@ -5,6 +5,7 @@ public class EventCalendar {
     private int numEvents; //current number of events in the array
 
     final static int NOT_FOUND_IN_ARRAY = -1;
+    final static int EQUAL_IN_COMPARABLE = 0;
 
     /**
      * Search all events and return the event's index if it is found.
@@ -88,26 +89,82 @@ public class EventCalendar {
      * print the array as is
      */
     public void print() {
-        for(Event event : this.events){
+        for (Event event : this.events) {
             System.out.println(event);
         }
 
     }
 
+    /**
+     * Used by lambda function to define how things should be sorted.
+     *
+     * @param <T> the type of the things being compared
+     */
     private interface CustomComparator<T> {
         int compare(T a, T b);
     }
 
-    private <T> void quickSort(T[] toSort, CustomComparator<T> comparator){
+    /**
+     * Implementation of bubble sort. Could not do O(nlogn) sort because it
+     * had to be in place and don't have access to random library.
+     *
+     * @param toSort     array to be sorted
+     * @param comparator typically a lambda that will be used to compare two
+     *                   things in the array. Is expected to return a
+     *                   negative number if the first parameter is smaller
+     *                   than the second
+     * @param <T>        type of the array to be sorted
+     */
+    private static <T> void bubbleSort(
+            T[] toSort, CustomComparator<T> comparator
+    ) {
+
+        for (int i = 0; i < toSort.length; i++) {
+            for (int j = i; j < toSort.length; j++) {
+                if (comparator.compare(toSort[j], toSort[i]) <
+                    EQUAL_IN_COMPARABLE) {
+                    T temp = toSort[i];
+                    toSort[i] = toSort[j];
+                    toSort[j] = temp;
+                }
+            }
+        }
+    }
+
+    /**
+     * prints events ordered by date and timeslot
+     */
+    public void printByDate() {
+        CustomComparator<Event> dateComparator =
+                (event1, event2) -> event1.getDate()
+                                          .compareTo(event2.getDate());
+        EventCalendar.bubbleSort(this.events, dateComparator);
+
+        this.print();
 
     }
 
-    public void printByDate() {
-    } //ordered by date and timeslot
-
+    /**
+     * prints events ordered by campus and building/room
+     */
     public void printByCampus() {
-    } //ordered by campus and building/room
+        CustomComparator<Event> campusBuildingComparator =
+                (event1, event2) -> event1.getCampus()
+                                          .compareTo(event2.getCampus());
+        EventCalendar.bubbleSort(this.events, campusBuildingComparator);
 
+        this.print();
+    }
+
+    /**
+     * prints events ordered by department
+     */
     public void printByDepartment() {
-    } //ordered by department
+        CustomComparator<Event> departmentComparator =
+                (event1, event2) -> event1.getDepartment()
+                                          .compareTo(event2.getDepartment());
+        EventCalendar.bubbleSort(this.events, departmentComparator);
+
+        this.print();
+    }
 }
