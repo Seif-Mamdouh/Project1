@@ -6,6 +6,14 @@ public class EventCalendar {
 
     final static int NOT_FOUND_IN_ARRAY = -1;
     final static int EQUAL_IN_COMPARABLE = 0;
+    final static int INITIAL_AND_ADDITIONAL_ARRAY_CAPACITY = 4;
+    final static int INITIAL_NUMBER_OF_EVENTS = 0;
+
+    public EventCalendar() {
+        this.events =
+                new Event[EventCalendar.INITIAL_AND_ADDITIONAL_ARRAY_CAPACITY];
+        this.numEvents = INITIAL_NUMBER_OF_EVENTS;
+    }
 
     /**
      * Search all events and return the event's index if it is found.
@@ -15,7 +23,7 @@ public class EventCalendar {
      * @return index of event or NOT_FOUND_IN_ARRAY if it is not found
      */
     private int find(Event event) {
-        for (int i = 0; i < this.events.length; i++) {
+        for (int i = 0; i < this.numEvents; i++) {
             if (this.events[i].equals(event)) {
                 return i;
             }
@@ -24,10 +32,12 @@ public class EventCalendar {
     }
 
     /**
-     * increase the capacity of the events array by 4
+     * Increase the capacity of the events array by
+     * INITIAL_AND_ADDITIONAL_ARRAY_CAPACITY.
      */
     private void grow() {
-        Event[] newEvents = new Event[this.events.length + 4];
+        Event[] newEvents = new Event[this.events.length +
+                                      EventCalendar.INITIAL_AND_ADDITIONAL_ARRAY_CAPACITY];
         System.arraycopy(this.events, 0, newEvents, 0, this.events.length);
         this.events = newEvents;
     }
@@ -45,6 +55,9 @@ public class EventCalendar {
         }
         this.events[numEvents] = event;
         this.numEvents++;
+        System.out.println(String.format("added to index %d",
+                                         this.numEvents - 1
+        ));
         return true;
     }
 
@@ -64,12 +77,11 @@ public class EventCalendar {
         int indexOfEvent = this.find(event);
         this.numEvents--;
 
-        System.arraycopy(
-                this.events,
-                indexOfEvent + 1,
-                this.events,
-                indexOfEvent,
-                this.numEvents - indexOfEvent
+        System.arraycopy(this.events,
+                         indexOfEvent + 1,
+                         this.events,
+                         indexOfEvent,
+                         this.numEvents - indexOfEvent
         );
 
         return true;
@@ -109,6 +121,8 @@ public class EventCalendar {
      * had to be in place and don't have access to random library.
      *
      * @param toSort     array to be sorted
+     * @param numToSort  number of things to sort will only sort index 0
+     *                   through numToSort - 1. Any index after will be ignored
      * @param comparator typically a lambda that will be used to compare two
      *                   things in the array. Is expected to return a
      *                   negative number if the first parameter is smaller
@@ -116,11 +130,11 @@ public class EventCalendar {
      * @param <T>        type of the array to be sorted
      */
     private static <T> void bubbleSort(
-            T[] toSort, CustomComparator<T> comparator
+            T[] toSort, int numToSort, CustomComparator<T> comparator
     ) {
 
-        for (int i = 0; i < toSort.length; i++) {
-            for (int j = i; j < toSort.length; j++) {
+        for (int i = 0; i < numToSort; i++) {
+            for (int j = i; j < numToSort; j++) {
                 if (comparator.compare(toSort[j], toSort[i]) <
                     EQUAL_IN_COMPARABLE) {
                     T temp = toSort[i];
@@ -135,7 +149,7 @@ public class EventCalendar {
      * prints events ordered by date and timeslot
      */
     public void printByDate() {
-        EventCalendar.bubbleSort(this.events, Event::compareTo);
+        EventCalendar.bubbleSort(this.events, this.numEvents, Event::compareTo);
 
         this.print();
 
@@ -149,7 +163,11 @@ public class EventCalendar {
                 (event1, event2) -> event1.getLocation()
                                           .compareTo(event2.getLocation());
 
-        EventCalendar.bubbleSort(this.events, campusBuildingComparator);
+        EventCalendar.bubbleSort(
+                this.events,
+                this.numEvents,
+                campusBuildingComparator
+        );
 
         this.print();
     }
@@ -162,11 +180,88 @@ public class EventCalendar {
                 (event1, event2) -> event1.getContact()
                                           .getDepartment()
                                           .compareTo(event2.getContact()
-                                                           .getDepartment()
-                                          );
+                                                           .getDepartment());
 
-        EventCalendar.bubbleSort(this.events, departmentComparator);
+        EventCalendar.bubbleSort(
+                this.events,
+                this.numEvents,
+                departmentComparator
+        );
 
         this.print();
+    }
+
+    public static void main(String[] args) {
+        Event event1 = new Event(new Date(2023, 9, 20),
+                                 Timeslot.MORNING,
+                                 Location.ARC103,
+                                 new Contact(Department.EE,
+                                             "electric@rutgers.edu"
+                                 ),
+                                 120
+        );
+        System.out.println(event1);
+        Event event2 = new Event(new Date(2023, 9, 21),
+                                 Timeslot.AFTERNOON,
+                                 Location.HILL114,
+                                 new Contact(Department.CS, "cs@rutgers.edu"),
+                                 70
+        );
+        System.out.println(event2);
+        Event event3 = new Event(new Date(2023, 8, 19),
+                                 Timeslot.EVENING,
+                                 Location.AB2225,
+                                 new Contact(Department.BAIT,
+                                             "bait@rutgers.edu"
+                                 ),
+                                 97
+        );
+        System.out.println(event3);
+        Event event4 = new Event(new Date(2023, 10, 19),
+                                 Timeslot.MORNING,
+                                 Location.BE_AUD,
+                                 new Contact(Department.ITI,
+                                             "iti7@rutgers.edu"
+                                 ),
+                                 98
+        );
+        System.out.println(event4);
+        System.out.println("those were all of the events");
+
+        EventCalendar eventCalendar = new EventCalendar();
+        assert eventCalendar.add(event1);
+        System.out.println("after first event is added:");
+        eventCalendar.print();
+
+        assert eventCalendar.add(event2);
+        System.out.println("after second event is added:");
+        eventCalendar.print();
+
+        assert eventCalendar.add(event3);
+        System.out.println("after third event is added:");
+        eventCalendar.print();
+
+        assert eventCalendar.contains(event1);
+        assert eventCalendar.contains(event2);
+        assert eventCalendar.contains(event3);
+        assert !eventCalendar.contains(event4);
+        assert !eventCalendar.remove(event4);
+        assert eventCalendar.add(event4);
+        System.out.println("Finished assertions");
+
+        System.out.println("just print");
+        eventCalendar.print();
+
+        System.out.println("print by campus:");
+        eventCalendar.printByCampus();
+
+        System.out.println("print by date:");
+        eventCalendar.printByDate();
+
+        System.out.println("print by department:");
+        eventCalendar.printByDepartment();
+
+        assert eventCalendar.remove(event4);
+        assert !eventCalendar.contains(event4);
     }
 }
