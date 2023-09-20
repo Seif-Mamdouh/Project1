@@ -7,6 +7,7 @@ package eventOrganizer;
  * @Author Seifeldeen Mohamed
  */
 public class Date implements Comparable<Date> {
+
     /**
      * Constant representing  the number of years in a quadrennial cycle (4 years)
      * Constant representing the number of years in a centennial cycle (100 years).

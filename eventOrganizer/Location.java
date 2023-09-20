@@ -13,7 +13,6 @@ public enum Location {
     AB2225("Academic Building, College Avenue");
 
     private final String description;
-
     /**
      * Constructs a Location enum value with the specified description.
      *
