@@ -147,10 +147,7 @@ public class EventCalendar {
     public void printByCampus() {
         CustomComparator<Event> campusBuildingComparator =
                 (event1, event2) -> event1.getLocation()
-                                          .toString()
-                                          .compareTo(event2.getLocation()
-                                                           .toString()
-                                          );
+                                          .compareTo(event2.getLocation());
 
         EventCalendar.bubbleSort(this.events, campusBuildingComparator);
 
@@ -164,10 +161,8 @@ public class EventCalendar {
         CustomComparator<Event> departmentComparator =
                 (event1, event2) -> event1.getContact()
                                           .getDepartment()
-                                          .toString()
                                           .compareTo(event2.getContact()
                                                            .getDepartment()
-                                                           .toString()
                                           );
 
         EventCalendar.bubbleSort(this.events, departmentComparator);
