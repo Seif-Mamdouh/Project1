@@ -21,7 +21,7 @@ public enum Location {
      */
     Location(String description){
         this.description = description;
-    };
+    }
 
     /**
      * Returns the description of the location.
