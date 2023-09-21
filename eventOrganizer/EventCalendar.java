@@ -77,7 +77,7 @@ public class EventCalendar {
 
         int indexOfEvent = this.find(event);
 
-        for(int i = indexOfEvent + 1; i < this.numEvents; i++){
+        for (int i = indexOfEvent + 1; i < this.numEvents; i++) {
             this.events[i - 1] = this.events[i];
         }
 
@@ -111,6 +111,7 @@ public class EventCalendar {
      *
      * @param <T> the type of the things being compared
      */
+    @FunctionalInterface
     private interface CustomComparator<T> {
         int compare(T a, T b);
     }
