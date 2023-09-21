@@ -50,6 +50,11 @@ public class Date implements Comparable<Date> {
         return false;
     };
 
+    @Override
+    public String toString() {
+        return String.format("%s/%s/%s", this.month, this.day, this.year);
+    }
+
     public static void main(String[] args) {
         Date date1 = new Date(2023, 9, 12);
         Date date2 = new Date(2023, 9, 11);

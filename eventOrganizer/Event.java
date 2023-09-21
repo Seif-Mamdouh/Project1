@@ -4,6 +4,7 @@ package eventOrganizer;
 /**
  * Class that represents an Event at a certain date, time, location, duration,
  * and contact information of the reserving party.
+ *
  * @author Michael Muzafarov
  */
 public class Event implements Comparable<Event> {
@@ -15,11 +16,12 @@ public class Event implements Comparable<Event> {
 
     /**
      * Constructor that assigns each instance variable
-     * @param date date of event
+     *
+     * @param date      date of event
      * @param startTime time event starts
-     * @param location location of event
-     * @param contact contact of reserving party
-     * @param duration duration of event in minutes
+     * @param location  location of event
+     * @param contact   contact of reserving party
+     * @param duration  duration of event in minutes
      */
     public Event(
             Date date,
@@ -89,6 +91,22 @@ public class Event implements Comparable<Event> {
         );
     }
 
+    /**
+     * Get location of event.
+     *
+     * @return location
+     */
+    public Location getLocation() {
+        return location;
+    }
 
-// hold the contact department
-//maybe a data class
+    /**
+     * Get contact associated with event.
+     *
+     * @return contact
+     */
+    public Contact getContact() {
+        return contact;
+    }
+}
+
