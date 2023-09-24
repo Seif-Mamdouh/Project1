@@ -12,26 +12,27 @@ public enum Location {
     TIL232("Tillet Hall, Livingston"),
     AB2225("Academic Building, College Avenue");
 
-    private final String description;
+    private final String buildingName;
+    private final String campusName;
 
     /**
-     * Constructs a Location enum value with the specified description.
+     * Construct location with a building name and campus name
      *
-     * @param description The description of the campus location.
+     * @param buildingName name of building associated with location
+     * @param campusName   name of campus associated with location
      */
-    Location(String description){
-        this.description = description;
+    Location(String buildingName, String campusName) {
+        this.buildingName = buildingName;
+        this.campusName = campusName;
     }
 
-    /**
-     * Returns the description of the location.
-     */
-    public String getDescription(){
-        return description;
-    };
+    public String toString() {
+        return this.buildingName + ", " + this.campusName;
+    }
 
-    public static void main (String[] args){
-        System.out.println(Location.HILL114 + " - " + Location.HILL114.getDescription());
-        System.out.println(Location.ARC103 + " - " + Location.ARC103.getDescription());
-    };
-};
+
+    public static void main(String[] args) {
+        System.out.println(Location.HILL114 + " - " + Location.HILL114);
+        System.out.println(Location.ARC103 + " - " + Location.ARC103);
+    }
+}
