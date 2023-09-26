@@ -1,5 +1,7 @@
 package eventOrganizer;
 
+import java.util.Arrays;
+
 public class EventCalendar {
     private Event[] events; //the array holding the list of events
     private int numEvents; //current number of events in the array
@@ -13,6 +15,14 @@ public class EventCalendar {
         this.events =
                 new Event[EventCalendar.INITIAL_AND_ADDITIONAL_ARRAY_CAPACITY];
         this.numEvents = INITIAL_NUMBER_OF_EVENTS;
+    }
+
+    public int getNumEvents() {
+        return numEvents;
+    }
+
+    public Event[] getEvents() {
+        return Arrays.copyOf(events, numEvents); // Return a copy of the events array up to the current number of events
     }
 
     /**
@@ -106,6 +116,7 @@ public class EventCalendar {
 
     }
 
+
     /**
      * Used by lambda function to define how things should be sorted.
      *
@@ -159,9 +170,7 @@ public class EventCalendar {
      * prints events ordered by campus and building/room
      */
     public void printByCampus() {
-        CustomComparator<Event> campusBuildingComparator =
-                (event1, event2) -> event1.getLocation()
-                                          .compareTo(event2.getLocation());
+        CustomComparator<Event> campusBuildingComparator = (event1, event2) -> event1.getLocation().compareTo(event2.getLocation());
 
         EventCalendar.bubbleSort(this.events,
                                  this.numEvents,

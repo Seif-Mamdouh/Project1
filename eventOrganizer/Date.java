@@ -16,6 +16,42 @@ public class Date implements Comparable<Date> {
         this.day = day;
     }
 
+    /**
+     * Parse a date string in the format "month/day/year" and return a Date object.
+     *
+     * @param dateStr the date string to parse
+     * @return a Date object representing the parsed date
+     * @throws IllegalArgumentException if the input is not in a valid format
+     */
+    public static Date parseDate(String dateStr){
+        String [] dateSplit = dateStr.split("/");
+        if(dateSplit.length != 3){
+            throw new IllegalArgumentException("Invalid date format: " + dateStr);
+        };
+
+        int month, day, year;
+
+        try {
+            month = Integer.parseInt(dateSplit[0]);
+            day = Integer.parseInt(dateSplit[1]);
+            year = Integer.parseInt(dateSplit[2]);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Invalid date format: " + dateStr);
+        }
+
+        return new Date(year, month, day);
+    }
+
+    private boolean isLeapYear(int year) {
+        // Check if the year is a leap year (divisible by 4, not divisible by 100, or divisible by 400)
+        return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+    }
+
+    private boolean isValidMonth(int month) {
+        // Check if the month is within a valid range (1 to 12)
+        return month >= 1 && month <= 12;
+    }
+
     public boolean isValid(){
 
         if (month < 1 || month > 12){
@@ -43,12 +79,7 @@ public class Date implements Comparable<Date> {
         return Integer.compare(this.day, otherDate.day);
     }
 
-    private boolean isLeapYear(int year){
-        if((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {
-            return true;
-        }
-        return false;
-    };
+
 
     @Override
     public String toString() {

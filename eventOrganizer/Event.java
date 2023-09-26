@@ -1,6 +1,8 @@
 package eventOrganizer;
 
 
+import java.sql.Time;
+
 /**
  * Class that represents an Event at a certain date, time, location, duration,
  * and contact information of the reserving party.
@@ -79,13 +81,17 @@ public class Event implements Comparable<Event> {
      */
     @Override
     public String toString() {
+//        logic for getEndTimesSlot
+//        Timeslot endTime = startTime.getEndTimeslot(duration);
+
         String baseString =
-                "[Event Date: %s] [Start: %s] [End: IMPLEMENTATION PENDING] " +
+                "[Event Date: %s] [Start: %s] [End: %s] " +
                 "%s [Contact: %s]";
         return String.format(
                 baseString,
                 this.date.toString(),
                 this.startTime.toString(),
+//                endTime.toString(),
                 this.location.toString(),
                 this.contact.toString()
         );
@@ -107,6 +113,18 @@ public class Event implements Comparable<Event> {
      */
     public Contact getContact() {
         return contact;
+    }
+
+    public Date getDate() {
+        return this.date;
+    }
+
+    public Timeslot getTimeslot() {
+        return this.startTime;
+    }
+
+    public int getDuration(){
+        return duration;
     }
 }
 
