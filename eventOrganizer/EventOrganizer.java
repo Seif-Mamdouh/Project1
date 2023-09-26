@@ -41,6 +41,25 @@ public class EventOrganizer {
         try {
             // parse the date from the user's input and see if it matches the data from each class
             Date eventDate = Date.parseDate(tokens[1]);
+
+            // Check if the date is in a valid format
+            if (!eventDate.isValidFormat()) {
+                System.out.println("Invalid date format. Please use mm/dd/yyyy format.");
+                return;
+            }
+
+            // Check if the date is more than 6 months away from the current date
+            if (eventDate.isMoreThanSixMonthsAway()) {
+                System.out.println("Event date is more than 6 months away from today’s date.");
+                return;
+            }
+
+            // Check if the date is a future date
+            if (!eventDate.isFutureDate()) {
+                System.out.println("Event date should be a future date.");
+                return;
+            }
+
             Timeslot timeSlot = Timeslot.valueOf(tokens[2].toUpperCase());
             Location location = Location.valueOf(tokens[3].toUpperCase());
             Department department = Department.valueOf(tokens[4].toUpperCase());
@@ -166,7 +185,7 @@ public class EventOrganizer {
             return;
         }
 
-        String commandType = tokens[0].toUpperCase();
+        String commandType = tokens[0];
 
         // Perform actions based on the command type
         switch (commandType) {
@@ -204,7 +223,7 @@ public class EventOrganizer {
                 break;
 
             default:
-                System.out.println("Invalid command. Please provide a valid command (A, R, P, Q).");
+                System.out.println(commandType + " is an invalid command!");;
                 break;
         }
     }
