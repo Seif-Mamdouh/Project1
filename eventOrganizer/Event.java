@@ -85,7 +85,7 @@ public class Event implements Comparable<Event> {
 //        Timeslot endTime = startTime.getEndTimeslot(duration);
 
         String baseString =
-                "[Event Date: %s] [Start: %s] [End: %s] " +
+                "[Event Date: %s] [Start: %s] [End: IMPLEMENTATION of endTime method awaiting] " +
                 "%s [Contact: %s]";
         return String.format(
                 baseString,
