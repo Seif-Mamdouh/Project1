@@ -1,15 +1,32 @@
 package eventOrganizer;
-import java.util.Arrays;
 import java.util.Scanner;
-import java.util.Comparator;
+
+
+
+/**
+ * The main Method to trigger all classes
+ *
+ * @author Seifeldeen Mohamed
+ */
+
 
 public class EventOrganizer {
     private EventCalendar eventCalendar;
+
 
     public void setEventCalendar(EventCalendar eventCalendar) {
         this.eventCalendar = eventCalendar;
     }
 
+    /**
+     * Method is used to add a new event to the event calendar.
+     * The Method parses the 'A' command to trigger the addEvent logic to add a new event to the event calendar
+     *
+     * @param commandAdd A string containing information to create and add an event.
+     *                   The expected format is "A DATE TIMESLOT LOCATION DEPARTMENT VALID-EMAIL TIME(min)".
+     *
+     * @throws IllegalArgumentException If the commandAdd string does not match the expected format.
+     */
     public void addEvent(String commandAdd) {
         // parse the command and split it to read it
         String[] tokens = commandAdd.split(" ");
@@ -44,8 +61,11 @@ public class EventOrganizer {
         }
     }
 
+    /**
+     * Displays all the current events in the event calendar
+     *
+     */
     public void displayCalendar() {
-        // Implement logic to display the calendar with the current order
         int numberEvents = eventCalendar.getNumEvents();
 
         if (numberEvents == 0) {
@@ -56,6 +76,9 @@ public class EventOrganizer {
         }
     }
 
+    /**
+     * Displays all the current events in the event calendar Sorted by Date
+     */
     public void displayCalendarByDate() {
         int numberEvents = eventCalendar.getNumEvents();
 
@@ -69,6 +92,10 @@ public class EventOrganizer {
 
     }
 
+    /**
+     * Displays all the current events in the event calendar Sorted by Campus
+     */
+
     public void displayCalendarByCampus() {
         int numberEvents = eventCalendar.getNumEvents();
 
@@ -81,6 +108,11 @@ public class EventOrganizer {
         }
     }
 
+
+    /**
+     * Displays all the current events in the event calendar Sorted by Department
+     */
+
     public void displayCalendarByDepartment() {
         int numberEvents = eventCalendar.getNumEvents();
 
@@ -91,18 +123,23 @@ public class EventOrganizer {
             System.out.println("The Event Calendar (Sorted by Department): ");
             eventCalendar.printByDepartment();
         }
-
     }
 
+    /**
+     * Method to remove a Event from the Event List using the the Date to search for the event
+     *
+     * @param dateToRemove
+     * @param timeSlotToken
+     * @param locationToken
+     */
+    public void cancelEvent(String dateToRemove, String timeSlotToken, String locationToken) {
 
-    public void cancelEvent(String dateToRemove) {
-        // Parse the date from the user's input
+        // parse tokens that the user have provided
         Date date = Date.parseDate(dateToRemove);
+        Timeslot timeslot = Timeslot.valueOf(timeSlotToken.toUpperCase());
+        Location location = Location.valueOf(locationToken.toUpperCase());
 
-        System.out.println(date);
-        // Initialize default values for optional parameters
-        Timeslot timeslot = Timeslot.MORNING;
-        Location location = Location.HILL114;
+        //Intilaize the rest of default value for the event class
         Department department = Department.CS;
         String contactEmail = "cs@rutgers.edu";
         int duration = 60;
@@ -129,8 +166,7 @@ public class EventOrganizer {
             return;
         }
 
-        // Extract the command type (e.g., "A" for Add, "R" for Remove, etc.)
-        String commandType = tokens[0].toUpperCase(); // Convert to uppercase for case insensitivity
+        String commandType = tokens[0].toUpperCase();
 
         // Perform actions based on the command type
         switch (commandType) {
@@ -138,11 +174,13 @@ public class EventOrganizer {
                 addEvent(commandLine);
                 break;
             case "R":
-                if (tokens.length >= 2) {
+                if (tokens.length >= 3) {
                     String dateToken = tokens[1];
-                    cancelEvent(dateToken);
+                    String timeSlotToken = tokens[2];
+                    String locationToken = tokens[3];
+                    cancelEvent(dateToken, timeSlotToken, locationToken);
                 } else {
-                    System.out.println("Invalid 'R' command. Please provide a date to remove an event.");
+                    System.out.println("Invalid 'R' command. Please provide a Date, Time Slot & Location to remove an event.");
                 }
                 break;
             case "P":

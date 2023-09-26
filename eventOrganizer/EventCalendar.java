@@ -80,7 +80,6 @@ public class EventCalendar {
      * the event did not exist and could not be removed
      */
     public boolean remove(Event event) {
-
         if (!this.contains(event)) {
             return false;
         }
