@@ -67,4 +67,11 @@ public class Contact {
     public Department getDepartment() {
         return department;
     }
+
+
+    @Override
+    public String toString() {
+        return department.toString() + " - " + email;
+    }
+
 }
