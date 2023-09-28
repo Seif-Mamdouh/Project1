@@ -218,7 +218,7 @@ public class EventOrganizer {
                 displayCalendar();
                 break;
             case "PE":
-                displayCalendar();
+                displayCalendarByDate();
                 break;
             case "PC":
                 displayCalendarByCampus();
