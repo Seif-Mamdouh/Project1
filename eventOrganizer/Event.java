@@ -53,7 +53,7 @@ public class Event implements Comparable<Event> {
         }
         Event otherEvent = (Event) obj;
 
-        return (this.compareTo(otherEvent) == 0);
+        return (this.compareTo(otherEvent) == 0 && this.location.equals(otherEvent.getLocation()));
 
     }
 

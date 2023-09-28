@@ -115,7 +115,6 @@ public class EventCalendar {
 
     }
 
-
     /**
      * Used by lambda function to define how things should be sorted.
      *
@@ -169,7 +168,7 @@ public class EventCalendar {
      * prints events ordered by campus and building/room
      */
     public void printByCampus() {
-        CustomComparator<Event> campusBuildingComparator = (event1, event2) -> event1.getLocation().compareTo(event2.getLocation());
+        CustomComparator<Event> campusBuildingComparator = (event1, event2) -> event1.getLocation().getCampusName().compareTo(event2.getLocation().getCampusName());
 
         EventCalendar.bubbleSort(this.events,
                                  this.numEvents,
@@ -185,9 +184,9 @@ public class EventCalendar {
     public void printByDepartment() {
         CustomComparator<Event> departmentComparator =
                 (event1, event2) -> event1.getContact()
-                                          .getDepartment()
+                                          .getDepartment().toString()
                                           .compareTo(event2.getContact()
-                                                           .getDepartment());
+                                                           .getDepartment().toString());
 
         EventCalendar.bubbleSort(this.events,
                                  this.numEvents,
@@ -195,6 +194,16 @@ public class EventCalendar {
         );
 
         this.print();
+    }
+
+    /**
+     * Method to check if the event exists by checking if the DATE/TIMESLOT/LOCATION already exists
+     * @param eventToCheck
+     * @return
+     */
+    public boolean hasConflict(Event eventToCheck) {
+        return this.find(eventToCheck) != -1;
+
     }
 
     /**

@@ -27,6 +27,7 @@ public class EventOrganizer {
      *
      * @throws IllegalArgumentException If the commandAdd string does not match the expected format.
      */
+
     public void addEvent(String commandAdd) {
         // parse the command and split it to read it
         String[] tokens = commandAdd.split(" ");
@@ -41,7 +42,6 @@ public class EventOrganizer {
         try {
             // parse the date from the user's input and see if it matches the data from each class
             Date eventDate = Date.parseDate(tokens[1]);
-
             // Check if the date is in a valid format
             if (!eventDate.isValidFormat()) {
                 System.out.println("Invalid date format. Please use mm/dd/yyyy format.");
@@ -70,15 +70,24 @@ public class EventOrganizer {
 
             Event newEvent = new Event(eventDate, timeSlot, location, contact, duration);
 
-            if (eventCalendar.add(newEvent)) {
-                System.out.println("Event added successfully.");
+            boolean hasConflict = eventCalendar.hasConflict(newEvent);
+
+            if (hasConflict) {
+                System.out.println("Conflict of schedule - an event with the same date/timeslot/location is already on the calendar.");
             } else {
-                System.out.println("Maybe there's a scheduling conflict. Event couldn't be added");
+                // Add the event if there are no conflicts
+                if (eventCalendar.add(newEvent)) {
+                    System.out.println("Event added successfully.");
+                } else {
+                    System.out.println("Maybe there's a scheduling conflict. Event couldn't be added.");
+                }
             }
         } catch (Exception e) {
-            System.out.println("Invalid input, please recheck your input");
+
+            System.out.println("Invalid Add input, please recheck your input");
         }
     }
+//    A 12/10/2023 Morning TIL232 math Youggie@rutgers.edu 80
 
     /**
      * Displays all the current events in the event calendar
@@ -91,7 +100,7 @@ public class EventOrganizer {
             System.out.println("The Event Calendar is empty");
             return;
         } else {
-            eventCalendar.printByDate();
+            eventCalendar.print();
         }
     }
 
@@ -174,7 +183,10 @@ public class EventOrganizer {
         }
     }
 
-
+    /**
+     * Method to run User's commands
+     * @param commandLine
+     */
     public void processCommand(String commandLine) {
         // Split the command line into tokens
         String[] tokens = commandLine.split(" ");
@@ -203,25 +215,17 @@ public class EventOrganizer {
                 }
                 break;
             case "P":
-                // Display the calendar based on the provided criteria
-                if (tokens.length >= 2) {
-                    String criteria = tokens[1].toUpperCase(); // Convert to uppercase for case insensitivity
-
-                    if (criteria.equals("E")) {
-                        displayCalendarByDate();
-                    } else if (criteria.equals("C")) {
-                        displayCalendarByCampus();
-                    } else if (criteria.equals("D")) {
-                        displayCalendarByDepartment();
-                    } else {
-                        System.out.println("Invalid 'P' command. Please specify a valid criteria (PE, PC, PD).");
-                    }
-                } else {
-                    // Display the calendar with the current order
-                    displayCalendar();
-                }
+                displayCalendar();
                 break;
-
+            case "PE":
+                displayCalendar();
+                break;
+            case "PC":
+                displayCalendarByCampus();
+                break;
+            case "PD":
+                displayCalendarByDepartment();
+                break;
             default:
                 System.out.println(commandType + " is an invalid command!");;
                 break;
