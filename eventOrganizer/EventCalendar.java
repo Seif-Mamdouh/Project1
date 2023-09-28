@@ -1,6 +1,5 @@
 package eventOrganizer;
 
-import java.util.Arrays;
 
 public class EventCalendar {
     private Event[] events; //the array holding the list of events
@@ -19,10 +18,6 @@ public class EventCalendar {
 
     public int getNumEvents() {
         return numEvents;
-    }
-
-    public Event[] getEvents() {
-        return Arrays.copyOf(events, numEvents); // Return a copy of the events array up to the current number of events
     }
 
     /**

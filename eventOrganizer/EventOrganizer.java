@@ -43,7 +43,7 @@ public class EventOrganizer {
             // parse the date from the user's input and see if it matches the data from each class
             Date eventDate = Date.parseDate(tokens[1]);
             // Check if the date is in a valid format
-            if (!eventDate.isValidFormat()) {
+            if (!eventDate.isValid()) {
                 System.out.println("Invalid date format. Please use mm/dd/yyyy format.");
                 return;
             }
