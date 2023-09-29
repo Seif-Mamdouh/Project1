@@ -71,7 +71,6 @@ public class EventOrganizer {
                 return;
             }
 
-
             Timeslot timeSlot = Timeslot.valueOf(tokens[TIMESLOT_TOKEN_INDEX].toUpperCase());
             Location location = Location.valueOf(tokens[LOCATION_TOKEN_INDEX].toUpperCase());
             Department department = Department.valueOf(tokens[DEPARTMENT_TOKEN_INDEX].toUpperCase());
@@ -79,23 +78,17 @@ public class EventOrganizer {
             int duration = Integer.parseInt(tokens[DURATION_TOKEN_INDEX]);
 
             Contact contact = new Contact(department, contactEmail);
-
             Event newEvent = new Event(eventDate, timeSlot, location, contact, duration);
-
             boolean hasConflict = eventCalendar.hasConflict(newEvent);
 
             if (hasConflict) {
                 System.out.println("Conflict of schedule - an event with the same date/timeslot/location is already on the calendar.");
-            } else {
-                // Add the event if there are no conflicts
-                if (eventCalendar.add(newEvent)) {
+            } else if (eventCalendar.add(newEvent)) {
                     System.out.println("Event added successfully.");
-                } else {
-                    System.out.println("Maybe there's a scheduling conflict. Event couldn't be added.");
-                }
+            } else {
+                System.out.println("Maybe there's a scheduling conflict. Event couldn't be added.");
             }
         } catch (Exception e) {
-
             System.out.println("Invalid Add input, please recheck your input");
         }
     }
@@ -124,11 +117,10 @@ public class EventOrganizer {
         if (numberEvents == 0) {
             System.out.println("The Event Calendar is empty");
             return;
-        } else {
-            System.out.println("Event Calendar (Sorted by Date):");
-            eventCalendar.printByDate();
         }
 
+        System.out.println("Event Calendar (Sorted by Date):");
+        eventCalendar.printByDate();
     }
 
     /**
@@ -141,10 +133,9 @@ public class EventOrganizer {
         if (numberEvents == 0) {
             System.out.println("The Event Calendar is empty");
             return;
-        } else {
-            System.out.println("Event Calendar (Sorted by Campus): ");
-            eventCalendar.printByCampus();
         }
+        System.out.println("Event Calendar (Sorted by Campus): ");
+        eventCalendar.printByCampus();
     }
 
 
@@ -158,10 +149,9 @@ public class EventOrganizer {
         if (numberEvents == 0) {
             System.out.println("The Event Calendar is empty");
             return;
-        } else {
+        }
             System.out.println("The Event Calendar (Sorted by Department): ");
             eventCalendar.printByDepartment();
-        }
     }
 
     /**
@@ -200,7 +190,7 @@ public class EventOrganizer {
      */
     public void processCommand(String commandLine) {
         // Split the command line into tokens
-        String[] tokens = commandLine.split(" ");
+        String[] tokens = commandLine.split("\\s+");
 
         // Check if the command is empty or invalid
         if (tokens.length == 0) {
@@ -256,7 +246,6 @@ public class EventOrganizer {
                 System.out.println("Event Organizer terminated.");
                 break;
             }
-
             processCommand(commandLine);
         }
         scanner.close();
