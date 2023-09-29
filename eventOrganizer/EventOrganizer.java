@@ -228,7 +228,7 @@ public class EventOrganizer {
                 displayCalendarByDepartment();
                 break;
             default:
-                System.out.println(commandType + " is an invalid command!");;
+                System.out.println(commandType + " is an invalid command!");
                 break;
         }
     }
