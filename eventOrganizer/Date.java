@@ -13,9 +13,9 @@ public class Date implements Comparable<Date> {
     public static final int CENTENNIAL = 100;
     public static final int QUATERCENTENNIAL = 400;
 
-    private int year;
-    private int month;
-    private int day;
+    private int year; //the year componenent in date
+    private int month; //the month componenent in date
+    private int day; //the day componenent in date
 
     /**
      * Default Constructor
@@ -28,7 +28,6 @@ public class Date implements Comparable<Date> {
         this.month = month;
         this.day = day;
     }
-
 
     public int getYear(){
         return this.year;
@@ -51,7 +50,8 @@ public class Date implements Comparable<Date> {
      */
     public static Date parseDate(String dateStr){
         String [] dateSplit = dateStr.split("/");
-        if(dateSplit.length != 3){
+        int dateExpectedComponents = 3;
+        if(dateSplit.length != dateExpectedComponents){
             throw new IllegalArgumentException("Invalid date format: " + dateStr);
         };
 
@@ -68,22 +68,27 @@ public class Date implements Comparable<Date> {
         return new Date(year, month, day);
     }
 
+
+    private static final int[] dayInMonthConstant = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
     /**
      * Check if the date is in a valid format (mm/dd/yyyy).
      *
      * @return true if the date is valid, false otherwise
      */
     public boolean isValid() {
-        if (month < 1 || month > 12 || year < 0) {
+        if (this.month < 1 || this.month > 12 || this.year < 0) {
             return false;
-        }
-        int[] daysInMonth = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        };
 
-        if (isLeapYear(year)) {
-            daysInMonth[2] = 29;
+
+        int daysInTheCurrentMonth = dayInMonthConstant[this.month];
+
+        if (isLeapYear(year) && this.month == 2) {
+            daysInTheCurrentMonth = 29;
         }
 
-        return day >= 1 && day <= daysInMonth[month];
+        return this.day >= 1 && this.day <= daysInTheCurrentMonth;
     }
 
     /**
@@ -97,7 +102,7 @@ public class Date implements Comparable<Date> {
         targetDate.set(year, month - 1, day); //Calendar month is 0-indexed
 
         // Calculate the difference in months
-        long monthsDifference = getMonthDifference(todayDate, targetDate);
+        long monthsDifference = this.getMonthDifference(todayDate, targetDate);
 
         return monthsDifference > 6;
     }
