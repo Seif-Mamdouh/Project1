@@ -2,13 +2,11 @@ package eventOrganizer;
 import java.util.Scanner;
 
 
-
 /**
  * The main Method to trigger all classes
  *
  * @author Seifeldeen Mohamed
  */
-
 
 public class EventOrganizer {
     private EventCalendar eventCalendar;
@@ -17,6 +15,18 @@ public class EventOrganizer {
     public void setEventCalendar(EventCalendar eventCalendar) {
         this.eventCalendar = eventCalendar;
     }
+
+
+    /**
+     * private static numbers to avoid magic numbers
+     */
+    private static final int DATE_TOKEN_INDEX = 1;
+    private static final int TIMESLOT_TOKEN_INDEX = 2;
+    private static final int LOCATION_TOKEN_INDEX = 3;
+    private static final int DEPARTMENT_TOKEN_INDEX = 4;
+    private static final int CONTACT_EMAIL_TOKEN_INDEX = 5;
+    private static final int DURATION_TOKEN_INDEX = 6;
+
 
     /**
      * Method is used to add a new event to the event calendar.
@@ -27,6 +37,7 @@ public class EventOrganizer {
      *
      * @throws IllegalArgumentException If the commandAdd string does not match the expected format.
      */
+
 
     public void addEvent(String commandAdd) {
         // parse the command and split it to read it
@@ -41,7 +52,7 @@ public class EventOrganizer {
 
         try {
             // parse the date from the user's input and see if it matches the data from each class
-            Date eventDate = Date.parseDate(tokens[1]);
+            Date eventDate = Date.parseDate(tokens[DATE_TOKEN_INDEX]);
             // Check if the date is in a valid format
             if (!eventDate.isValid()) {
                 System.out.println("Invalid date format. Please use mm/dd/yyyy format.");
@@ -60,11 +71,12 @@ public class EventOrganizer {
                 return;
             }
 
-            Timeslot timeSlot = Timeslot.valueOf(tokens[2].toUpperCase());
-            Location location = Location.valueOf(tokens[3].toUpperCase());
-            Department department = Department.valueOf(tokens[4].toUpperCase());
-            String contactEmail = tokens[5];
-            int duration = Integer.parseInt(tokens[6]);
+
+            Timeslot timeSlot = Timeslot.valueOf(tokens[TIMESLOT_TOKEN_INDEX].toUpperCase());
+            Location location = Location.valueOf(tokens[LOCATION_TOKEN_INDEX].toUpperCase());
+            Department department = Department.valueOf(tokens[DEPARTMENT_TOKEN_INDEX].toUpperCase());
+            String contactEmail = tokens[CONTACT_EMAIL_TOKEN_INDEX];
+            int duration = Integer.parseInt(tokens[DURATION_TOKEN_INDEX]);
 
             Contact contact = new Contact(department, contactEmail);
 
@@ -87,7 +99,6 @@ public class EventOrganizer {
             System.out.println("Invalid Add input, please recheck your input");
         }
     }
-//    A 12/10/2023 Morning TIL232 math Youggie@rutgers.edu 80
 
     /**
      * Displays all the current events in the event calendar

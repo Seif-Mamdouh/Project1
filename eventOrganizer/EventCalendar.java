@@ -197,8 +197,7 @@ public class EventCalendar {
      * @return
      */
     public boolean hasConflict(Event eventToCheck) {
-        return this.find(eventToCheck) != -1;
-
+        return this.contains(eventToCheck);
     }
 
     /**

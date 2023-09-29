@@ -1,8 +1,5 @@
 package eventOrganizer;
 
-
-import java.sql.Time;
-
 /**
  * Class that represents an Event at a certain date, time, location, duration,
  * and contact information of the reserving party.
