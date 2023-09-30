@@ -1,4 +1,4 @@
-package eventOrganizer;
+package scheduler;
 
 /**
  * Class that represents an Event at a certain date, time, location, duration,

@@ -1,4 +1,4 @@
-package eventOrganizer;
+package scheduler;
 
 public enum Location {
     HILL114("Hill Center", "Busch"),

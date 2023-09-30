@@ -1,4 +1,4 @@
-package eventOrganizer;
+package scheduler;
 
 /**
  * Enum class to represent all departments

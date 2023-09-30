@@ -1,4 +1,4 @@
-package eventOrganizer;
+package scheduler;
 
 import java.util.Arrays;
 

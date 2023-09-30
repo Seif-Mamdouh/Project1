@@ -1,4 +1,4 @@
-package eventOrganizer;
+package scheduler;
 
 public class MonthValue {
 
