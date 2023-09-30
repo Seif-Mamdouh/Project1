@@ -1,5 +1,6 @@
 package eventOrganizer;
 
+
 public class EventCalendar {
     private Event[] events; //the array holding the list of events
     private int numEvents; //current number of events in the array
@@ -13,6 +14,10 @@ public class EventCalendar {
         this.events =
                 new Event[EventCalendar.INITIAL_AND_ADDITIONAL_ARRAY_CAPACITY];
         this.numEvents = INITIAL_NUMBER_OF_EVENTS;
+    }
+
+    public int getNumEvents() {
+        return numEvents;
     }
 
     /**
@@ -70,7 +75,6 @@ public class EventCalendar {
      * the event did not exist and could not be removed
      */
     public boolean remove(Event event) {
-
         if (!this.contains(event)) {
             return false;
         }
@@ -159,9 +163,7 @@ public class EventCalendar {
      * prints events ordered by campus and building/room
      */
     public void printByCampus() {
-        CustomComparator<Event> campusBuildingComparator =
-                (event1, event2) -> event1.getLocation()
-                                          .compareTo(event2.getLocation());
+        CustomComparator<Event> campusBuildingComparator = (event1, event2) -> event1.getLocation().getCampusName().compareTo(event2.getLocation().getCampusName());
 
         EventCalendar.bubbleSort(this.events,
                                  this.numEvents,
@@ -177,9 +179,9 @@ public class EventCalendar {
     public void printByDepartment() {
         CustomComparator<Event> departmentComparator =
                 (event1, event2) -> event1.getContact()
-                                          .getDepartment()
+                                          .getDepartment().toString()
                                           .compareTo(event2.getContact()
-                                                           .getDepartment());
+                                                           .getDepartment().toString());
 
         EventCalendar.bubbleSort(this.events,
                                  this.numEvents,
@@ -187,6 +189,15 @@ public class EventCalendar {
         );
 
         this.print();
+    }
+
+    /**
+     * Method to check if the event exists by checking if the DATE/TIMESLOT/LOCATION already exists
+     * @param eventToCheck
+     * @return
+     */
+    public boolean hasConflict(Event eventToCheck) {
+        return this.contains(eventToCheck);
     }
 
     /**

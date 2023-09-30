@@ -25,6 +25,13 @@ public enum Location {
         return this.buildingName + ", " + this.campusName;
     }
 
+    public String getBuildingName() {
+        return buildingName;
+    }
+
+    public String getCampusName() {
+        return campusName;
+    }
 
     public static void main(String[] args) {
         System.out.println(Location.HILL114 + " - " + Location.HILL114);
