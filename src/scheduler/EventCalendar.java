@@ -1,6 +1,10 @@
 package scheduler;
 
-
+/**
+ * A calendar that contains multiple events and helps schedule them.
+ *
+ * @author Michael Muzafarov
+ */
 public class EventCalendar {
     private Event[] events; //the array holding the list of events
     private int numEvents; //current number of events in the array
@@ -10,12 +14,20 @@ public class EventCalendar {
     final static int INITIAL_AND_ADDITIONAL_ARRAY_CAPACITY = 4;
     final static int INITIAL_NUMBER_OF_EVENTS = 0;
 
+    /**
+     * Construct EventCalendar with no events
+     */
     public EventCalendar() {
         this.events =
                 new Event[EventCalendar.INITIAL_AND_ADDITIONAL_ARRAY_CAPACITY];
         this.numEvents = INITIAL_NUMBER_OF_EVENTS;
     }
 
+    /**
+     * Get number of events in calendar
+     *
+     * @return number of events
+     */
     public int getNumEvents() {
         return numEvents;
     }
@@ -194,7 +206,7 @@ public class EventCalendar {
     /**
      * Method to check if the event exists by checking if the DATE/TIMESLOT/LOCATION already exists
      * @param eventToCheck
-     * @return
+     * @return True if the event is already in the calendar, false otherwise
      */
     public boolean hasConflict(Event eventToCheck) {
         return this.contains(eventToCheck);

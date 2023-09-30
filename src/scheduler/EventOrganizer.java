@@ -1,9 +1,10 @@
 package scheduler;
+
 import java.util.Scanner;
 
 
 /**
- * The main Method to trigger all classes
+ * User Interface to interact with EventCalendar
  *
  * @author Seifeldeen Mohamed
  */
@@ -12,6 +13,11 @@ public class EventOrganizer {
     private EventCalendar eventCalendar;
 
 
+    /**
+     * Setter for the eventCalendar in EventOrganizer
+     *
+     * @param eventCalendar
+     */
     public void setEventCalendar(EventCalendar eventCalendar) {
         this.eventCalendar = eventCalendar;
     }
@@ -30,38 +36,55 @@ public class EventOrganizer {
 
     /**
      * Method is used to add a new event to the event calendar.
-     * The Method parses the 'A' command to trigger the addEvent logic to add a new event to the event calendar
+     * The Method parses the 'A' command to trigger the addEvent logic to add
+     * a new event to the event calendar
      *
-     * @param commandAdd A string containing information to create and add an event.
-     *                   The expected format is "A DATE TIMESLOT LOCATION DEPARTMENT VALID-EMAIL TIME(min)".
-     *
-     * @throws IllegalArgumentException If the commandAdd string does not match the expected format.
+     * @param commandAdd A string containing information to create and add an
+     *                  event.
+     *                   The expected format is "A DATE TIMESLOT LOCATION
+     *                   DEPARTMENT VALID-EMAIL TIME(min)".
+     * @throws IllegalArgumentException If the commandAdd string does not
+     * match the expected format.
      */
 
 
+    /**
+     * helper method to parse a string and add an event to the calendar
+     *
+     * @param commandAdd string to parse
+     */
     public void addEvent(String commandAdd) {
         // parse the command and split it to read it
         String[] tokens = commandAdd.split(" ");
 
         int numberOfTokensExpected = 7;
         if (tokens.length != numberOfTokensExpected) {
-            System.out.println("Invalid command/data, please add an event in the following order: ");
-            System.out.println("A DATE TIMESLOT LOCATION DEPARTMENT VALID-EMAIL TIME(min)");
+            System.out.println(
+                    "Invalid command/data, please add an event in the " +
+                    "following order: ");
+            System.out.println(
+                    "A DATE TIMESLOT LOCATION DEPARTMENT VALID-EMAIL TIME" +
+                    "(min)");
             return;
         }
 
         try {
-            // parse the date from the user's input and see if it matches the data from each class
+            // parse the date from the user's input and see if it matches the
+            // data from each class
             Date eventDate = Date.parseDate(tokens[DATE_TOKEN_INDEX]);
             // Check if the date is in a valid format
             if (!eventDate.isValid()) {
-                System.out.println("Invalid date format. Please use mm/dd/yyyy format.");
+                System.out.println(
+                        "Invalid date format. Please use mm/dd/yyyy format.");
                 return;
             }
 
-            // Check if the date is more than 6 months away from the current date
+            // Check if the date is more than 6 months away from the current
+            // date
             if (eventDate.isMoreThanSixMonthsAway()) {
-                System.out.println("Event date is more than 6 months away from today’s date.");
+                System.out.println(
+                        "Event date is more than 6 months away from today’s " +
+                        "date.");
                 return;
             }
 
@@ -71,31 +94,41 @@ public class EventOrganizer {
                 return;
             }
 
-            Timeslot timeSlot = Timeslot.valueOf(tokens[TIMESLOT_TOKEN_INDEX].toUpperCase());
-            Location location = Location.valueOf(tokens[LOCATION_TOKEN_INDEX].toUpperCase());
-            Department department = Department.valueOf(tokens[DEPARTMENT_TOKEN_INDEX].toUpperCase());
+            Timeslot timeSlot =
+                    Timeslot.valueOf(tokens[TIMESLOT_TOKEN_INDEX].toUpperCase());
+            Location location =
+                    Location.valueOf(tokens[LOCATION_TOKEN_INDEX].toUpperCase());
+            Department department =
+                    Department.valueOf(tokens[DEPARTMENT_TOKEN_INDEX].toUpperCase());
             String contactEmail = tokens[CONTACT_EMAIL_TOKEN_INDEX];
             int duration = Integer.parseInt(tokens[DURATION_TOKEN_INDEX]);
 
             Contact contact = new Contact(department, contactEmail);
-            Event newEvent = new Event(eventDate, timeSlot, location, contact, duration);
+            Event newEvent =
+                    new Event(eventDate, timeSlot, location, contact, duration);
             boolean hasConflict = eventCalendar.hasConflict(newEvent);
 
             if (hasConflict) {
-                System.out.println("Conflict of schedule - an event with the same date/timeslot/location is already on the calendar.");
-            } else if (eventCalendar.add(newEvent)) {
-                    System.out.println("Event added successfully.");
-            } else {
-                System.out.println("Maybe there's a scheduling conflict. Event couldn't be added.");
+                System.out.println(
+                        "Conflict of schedule - an event with the same " +
+                        "date/timeslot/location is already on the calendar.");
             }
-        } catch (Exception e) {
+            else if (eventCalendar.add(newEvent)) {
+                System.out.println("Event added successfully.");
+            }
+            else {
+                System.out.println(
+                        "Maybe there's a scheduling conflict. Event couldn't " +
+                        "be added.");
+            }
+        }
+        catch (Exception e) {
             System.out.println("Invalid Add input, please recheck your input");
         }
     }
 
     /**
      * Displays all the current events in the event calendar
-     *
      */
     public void displayCalendar() {
         int numberEvents = eventCalendar.getNumEvents();
@@ -103,7 +136,8 @@ public class EventOrganizer {
         if (numberEvents == 0) {
             System.out.println("The Event Calendar is empty");
             return;
-        } else {
+        }
+        else {
             eventCalendar.print();
         }
     }
@@ -140,9 +174,9 @@ public class EventOrganizer {
 
 
     /**
-     * Displays all the current events in the event calendar Sorted by Department
+     * Displays all the current events in the event calendar Sorted by
+     * department
      */
-
     public void displayCalendarByDepartment() {
         int numberEvents = eventCalendar.getNumEvents();
 
@@ -150,18 +184,21 @@ public class EventOrganizer {
             System.out.println("The Event Calendar is empty");
             return;
         }
-            System.out.println("The Event Calendar (Sorted by Department): ");
-            eventCalendar.printByDepartment();
+        System.out.println("The Event Calendar (Sorted by Department): ");
+        eventCalendar.printByDepartment();
     }
 
     /**
-     * Method to remove a Event from the Event List using the the Date to search for the event
+     * Method to remove a Event from the Event List using the the Date to
+     * search for the event
      *
-     * @param dateToRemove
-     * @param timeSlotToken
-     * @param locationToken
+     * @param dateToRemove date of event to remove
+     * @param timeSlotToken timeSlot of event to remove
+     * @param locationToken location of event to remove
      */
-    public void cancelEvent(String dateToRemove, String timeSlotToken, String locationToken) {
+    public void cancelEvent(
+            String dateToRemove, String timeSlotToken, String locationToken
+    ) {
 
         // parse tokens that the user have provided
         Date date = Date.parseDate(dateToRemove);
@@ -174,19 +211,27 @@ public class EventOrganizer {
         int duration = 60;
 
         // Create an event with user-specified parameters
-        Event eventToRemove = new Event(date, timeslot, location, new Contact(department, contactEmail), duration);
+        Event eventToRemove = new Event(
+                date,
+                timeslot,
+                location,
+                new Contact(department, contactEmail),
+                duration
+        );
 
         // Remove the event from the calendar
         if (eventCalendar.remove(eventToRemove)) {
             System.out.println("Event removed successfully.");
-        } else {
+        }
+        else {
             System.out.println("Event not found. Nothing to remove.");
         }
     }
 
     /**
      * Method to run User's commands
-     * @param commandLine
+     *
+     * @param commandLine command from user
      */
     public void processCommand(String commandLine) {
         // Split the command line into tokens
@@ -194,7 +239,8 @@ public class EventOrganizer {
 
         // Check if the command is empty or invalid
         if (tokens.length == 0) {
-            System.out.println("Invalid command. Please provide a valid command.");
+            System.out.println(
+                    "Invalid command. Please provide a valid command.");
             return;
         }
 
@@ -211,8 +257,11 @@ public class EventOrganizer {
                     String timeSlotToken = tokens[2];
                     String locationToken = tokens[3];
                     cancelEvent(dateToken, timeSlotToken, locationToken);
-                } else {
-                    System.out.println("Invalid 'R' command. Please provide a Date, Time Slot & Location to remove an event.");
+                }
+                else {
+                    System.out.println(
+                            "Invalid 'R' command. Please provide a Date, Time" +
+                            " Slot & Location to remove an event.");
                 }
                 break;
             case "P":
@@ -234,6 +283,9 @@ public class EventOrganizer {
     }
 
 
+    /**
+     * Runs the UI for the organizer, takes input and processes it
+     */
     public void run() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Event Organizer running...");
@@ -251,7 +303,11 @@ public class EventOrganizer {
         scanner.close();
     }
 
-    public static void main(String[] args){
+    /**
+     * Runs event calendar
+     * @param args unused, does not take command line args
+     */
+    public static void main(String[] args) {
         EventCalendar eventCalendar = new EventCalendar();
 
         // Create EventOrganizer and set the EventCalendar

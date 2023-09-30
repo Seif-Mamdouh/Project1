@@ -1,7 +1,7 @@
 package scheduler;
 
 /**
- * Enum class to represent all departments
+ * Enum class to represent all departments.
  *
  * @author Michael Muzafarov
  */

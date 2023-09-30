@@ -112,10 +112,20 @@ public class Event implements Comparable<Event> {
         return contact;
     }
 
+    /**
+     * Get date associated with event.
+     *
+     * @return date
+     */
     public Date getDate() {
         return this.date;
     }
 
+    /**
+     * Get timeSlot associated with event.
+     *
+     * @return timeSlot
+     */
     public Timeslot getTimeslot() {
         return this.startTime;
     }

@@ -69,6 +69,10 @@ public class Contact {
     }
 
 
+    /**
+     * Get string representation consisting of department - email
+     * @return
+     */
     @Override
     public String toString() {
         return department.toString() + " - " + email;
