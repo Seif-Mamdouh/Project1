@@ -116,8 +116,8 @@ public class EventCalendar {
      * print the array as is
      */
     public void print() {
-        for (Event event : this.events) {
-            System.out.println(event);
+        for(int i = 0; i < this.numEvents; i++){
+            System.out.println(this.events[i]);
         }
 
     }
