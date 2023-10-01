@@ -1,6 +1,10 @@
-package eventOrganizer;
+package scheduler;
 
-
+/**
+ * A calendar that contains multiple events and helps schedule them.
+ *
+ * @author Michael Muzafarov
+ */
 public class EventCalendar {
     private Event[] events; //the array holding the list of events
     private int numEvents; //current number of events in the array
@@ -10,12 +14,20 @@ public class EventCalendar {
     final static int INITIAL_AND_ADDITIONAL_ARRAY_CAPACITY = 4;
     final static int INITIAL_NUMBER_OF_EVENTS = 0;
 
+    /**
+     * Construct EventCalendar with no events
+     */
     public EventCalendar() {
         this.events =
                 new Event[EventCalendar.INITIAL_AND_ADDITIONAL_ARRAY_CAPACITY];
         this.numEvents = INITIAL_NUMBER_OF_EVENTS;
     }
 
+    /**
+     * Get number of events in calendar
+     *
+     * @return number of events
+     */
     public int getNumEvents() {
         return numEvents;
     }
@@ -104,8 +116,8 @@ public class EventCalendar {
      * print the array as is
      */
     public void print() {
-        for (Event event : this.events) {
-            System.out.println(event);
+        for (int i = 0; i < this.numEvents; i++) {
+            System.out.println(this.events[i]);
         }
 
     }
@@ -117,6 +129,14 @@ public class EventCalendar {
      */
     @FunctionalInterface
     private interface CustomComparator<T> {
+        /**
+         * Compares 2 things of type T
+         *
+         * @param a first thing to compare
+         * @param b second thing to compare
+         * @return negative number if a is less than b, positive number if a
+         * is greater than b, and 0 if they are equal
+         */
         int compare(T a, T b);
     }
 
@@ -163,7 +183,11 @@ public class EventCalendar {
      * prints events ordered by campus and building/room
      */
     public void printByCampus() {
-        CustomComparator<Event> campusBuildingComparator = (event1, event2) -> event1.getLocation().getCampusName().compareTo(event2.getLocation().getCampusName());
+        CustomComparator<Event> campusBuildingComparator =
+                (event1, event2) -> event1.getLocation()
+                                          .getCampusName()
+                                          .compareTo(event2.getLocation()
+                                                           .getCampusName());
 
         EventCalendar.bubbleSort(this.events,
                                  this.numEvents,
@@ -179,9 +203,11 @@ public class EventCalendar {
     public void printByDepartment() {
         CustomComparator<Event> departmentComparator =
                 (event1, event2) -> event1.getContact()
-                                          .getDepartment().toString()
+                                          .getDepartment()
+                                          .toString()
                                           .compareTo(event2.getContact()
-                                                           .getDepartment().toString());
+                                                           .getDepartment()
+                                                           .toString());
 
         EventCalendar.bubbleSort(this.events,
                                  this.numEvents,
@@ -192,9 +218,11 @@ public class EventCalendar {
     }
 
     /**
-     * Method to check if the event exists by checking if the DATE/TIMESLOT/LOCATION already exists
-     * @param eventToCheck
-     * @return
+     * Method to check if the event exists by checking if the
+     * DATE/TIMESLOT/LOCATION already exists
+     *
+     * @param eventToCheck event that we are checking exists or not
+     * @return True if the event is already in the calendar, false otherwise
      */
     public boolean hasConflict(Event eventToCheck) {
         return this.contains(eventToCheck);

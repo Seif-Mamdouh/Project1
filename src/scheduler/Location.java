@@ -1,5 +1,10 @@
-package eventOrganizer;
+package scheduler;
 
+/**
+ * Class that represents a Location consisting of a building and campus.
+ *
+ * @author Michael Muzafarov
+ */
 public enum Location {
     HILL114("Hill Center", "Busch"),
     ARC103("Allison Road Classroom", "Busch"),
@@ -21,14 +26,29 @@ public enum Location {
         this.campusName = campusName;
     }
 
+    /**
+     * String representation of location
+     *
+     * @return building name concatenated with campus name
+     */
     public String toString() {
         return this.buildingName + ", " + this.campusName;
     }
 
+    /**
+     * Getter for building name
+     *
+     * @return buildingName belonging to this location
+     */
     public String getBuildingName() {
         return buildingName;
     }
 
+    /**
+     * Getter for campus name
+     *
+     * @return campusName belonging to this location
+     */
     public String getCampusName() {
         return campusName;
     }

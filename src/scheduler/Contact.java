@@ -1,6 +1,4 @@
-package eventOrganizer;
-
-import java.util.Arrays;
+package scheduler;
 
 /**
  * Represents contact information of a department.
@@ -30,19 +28,23 @@ public class Contact {
      */
     private boolean isEmailValid() {
         String[] splitEmail = email.split("@");
-        if (splitEmail.length != 2) {
+
+        int expectedSplitLength = 2;
+        if (splitEmail.length != expectedSplitLength) {
             return false;
         }
 
-        String emailAddress = splitEmail[0];
-        String emailDomain = splitEmail[1];
+        int emailIndex = 0, domainIndex = 1;
+        String emailAddress = splitEmail[emailIndex];
+        String emailDomain = splitEmail[domainIndex];
         for (char c : emailAddress.toCharArray()) {
             if (!Character.isDigit(c) || !Character.isLetter(c)) {
                 return false;
             }
         }
 
-        return emailDomain.equals("rutgers.edu");
+        String expectedDomainName = "rutgers.edu";
+        return emailDomain.equals(expectedDomainName);
     }
 
     /**
@@ -53,8 +55,13 @@ public class Contact {
      */
     public boolean isValid() {
 
-        boolean validEnum = Arrays.stream(Department.values())
-                                  .anyMatch(dep -> department.equals(dep));
+        boolean validEnum = false;
+        for (Department dep : Department.values()) {
+            if (dep.equals(this.department)) {
+                validEnum = true;
+                break;
+            }
+        }
         return validEnum && this.isEmailValid();
 
     }
@@ -69,6 +76,11 @@ public class Contact {
     }
 
 
+    /**
+     * Get string representation consisting of department - email
+     *
+     * @return string representation
+     */
     @Override
     public String toString() {
         return department.toString() + " - " + email;
