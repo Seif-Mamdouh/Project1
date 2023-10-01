@@ -45,7 +45,8 @@ public class Contact {
             }
         }
 
-        return emailDomain.equals("rutgers.edu");
+        String expectedDomainName = "rutgers.edu";
+        return emailDomain.equals(expectedDomainName);
     }
 
     /**
