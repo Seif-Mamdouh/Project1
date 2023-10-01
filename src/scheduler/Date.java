@@ -137,7 +137,7 @@ public class Date implements Comparable<Date> {
         long monthsDifference = this.getMonthDifference(todayDate, targetDate);
 
         int mostMonthDifferenceBeforeReturningTrue = 6;
-        return monthsDifference > mostMonthDifferenceBeforeReturningTrue;
+        return monthsDifference >= mostMonthDifferenceBeforeReturningTrue;
     }
 
 
@@ -181,14 +181,9 @@ public class Date implements Comparable<Date> {
         int endYear = endDate.get(Calendar.YEAR);
         int endMonth = endDate.get(Calendar.MONTH);
 
-        return (endYear - startYear) * MONTHS_IN_YEAR + (endMonth - startMonth);
+        return (long) (endYear - startYear) * MONTHS_IN_YEAR + (endMonth - startMonth);
     }
 
-
-//    private boolean isValidMonth(int month) {
-//        // Check if the month is within a valid range (1 to 12)
-//        return month >= 1 && month <= 12;
-//    }
 
 
     /**
@@ -232,11 +227,11 @@ public class Date implements Comparable<Date> {
 
         Date date1 = new Date(2023, 9, 12);
         Date date2 = new Date(2023, 9, 11);
-        Date date3 = new Date(2023, 9, 11);
+        Date date3 = new Date(2024, 4, 29);
+//        System.out.println(
+//                "Comparing date1 to date2: " + date1.compareTo(date2));
         System.out.println(
-                "Comparing date1 to date2: " + date1.compareTo(date2));
-        System.out.println(
-                "Comparing date2 to date3: " + date2.compareTo(date3));
+                date3 + ": " + date3.isMoreThanSixMonthsAway());
 
     }
 };

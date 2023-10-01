@@ -245,7 +245,7 @@ public class EventCalendar {
         System.out.println(event1);
         Event event2 = new Event(new Date(2023, 9, 21),
                                  Timeslot.AFTERNOON,
-                                 Location.HILL114,
+                                 Location.HLL114,
                                  new Contact(Department.CS, "cs@rutgers.edu"),
                                  70
         );

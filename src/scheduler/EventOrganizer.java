@@ -12,7 +12,6 @@ import java.util.Scanner;
 public class EventOrganizer {
     private EventCalendar eventCalendar;
 
-
     /**
      * Create empty EventOrganizer
      */
@@ -65,7 +64,7 @@ public class EventOrganizer {
             // Check if the date is in a valid format
             if (!eventDate.isValid()) {
                 System.out.println(
-                        "Invalid date format. Please use mm/dd/yyyy format.");
+                        eventDate + " Invalid date format.");
                 return;
             }
 
@@ -73,14 +72,13 @@ public class EventOrganizer {
             // date
             if (eventDate.isMoreThanSixMonthsAway()) {
                 System.out.println(
-                        "Event date is more than 6 months away from today’s " +
-                        "date.");
+                        eventDate + ": Event date must be within 6 months!");
                 return;
             }
 
             // Check if the date is a future date
             if (!eventDate.isFutureDate()) {
-                System.out.println("Event date should be a future date.");
+                System.out.println( eventDate + ":Event date should be a future date.");
                 return;
             }
 
@@ -295,6 +293,3 @@ public class EventOrganizer {
     }
 
 }
-
-
-//logic

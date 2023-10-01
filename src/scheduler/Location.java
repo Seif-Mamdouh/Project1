@@ -6,7 +6,7 @@ package scheduler;
  * @author Michael Muzafarov
  */
 public enum Location {
-    HILL114("Hill Center", "Busch"),
+    HLL114("Hill Center", "Busch"),
     ARC103("Allison Road Classroom", "Busch"),
     BE_AUD("Beck Hall", "Livingston"),
     TIL232("Tillett Hall", "Livingston"),
@@ -54,7 +54,7 @@ public enum Location {
     }
 
     public static void main(String[] args) {
-        System.out.println(Location.HILL114 + " - " + Location.HILL114);
+        System.out.println(Location.HLL114 + " - " + Location.HLL114);
         System.out.println(Location.ARC103 + " - " + Location.ARC103);
     }
 }
