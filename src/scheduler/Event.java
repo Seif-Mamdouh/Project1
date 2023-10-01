@@ -87,7 +87,7 @@ public class Event implements Comparable<Event> {
         return String.format(
                 baseString,
                 this.date.toString(),
-                this.startTime.toString(),
+                this.startTime.startTime(),
                 this.startTime.timeAfterDuration(this.duration),
                 this.location.toString(),
                 this.contact.toString()

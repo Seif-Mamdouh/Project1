@@ -45,6 +45,33 @@ public enum Timeslot {
     }
 
     /**
+     * Helper function that will return the time in h:m format with AM or PM.
+     * Hour will not have leading zeroes and the minute will if below 10
+     *
+     * @param hour   hour to display
+     * @param minute minute to display
+     * @param amPm   integer corresponding to Calendar.AM and calendar.PM,
+     *               indicates if morning or not
+     * @return string representation of the time
+     */
+    private String formatTime(int hour, int minute, int amPm) {
+        String StringFormatWith2DigitPadding = "%02d";
+        return Integer.toString(hour) + ":" +
+               String.format(StringFormatWith2DigitPadding, minute) +
+               (amPm == Calendar.AM ? "AM" : "PM");
+    }
+
+    /**
+     * String representation of starting time of this Timeslot
+     * H:M(AM/PM), minutes are padded with a leading 0 if < 10
+     *
+     * @return string representation of Timeslot start time
+     */
+    public String startTime() {
+        return this.formatTime(this.HOUR, this.MINUTE, this.AM_PM);
+    }
+
+    /**
      * return the time after a duration
      *
      * @param duration the number of minutes elapsed since start time
@@ -65,12 +92,13 @@ public enum Timeslot {
         }
         int minute = calendarForTime.get(Calendar.MINUTE);
 
-        String StringFormatWith2DigitPadding = "%02d";
-        return Integer.toString(hour) + ":" +
-               String.format(StringFormatWith2DigitPadding, minute) +
-               (calendarForTime.get(Calendar.AM_PM) == Calendar.AM ? "AM" : "PM"
-               );
+        return this.formatTime(hour,
+                               minute,
+                               calendarForTime.get(Calendar.AM_PM)
+        );
+
     }
+
 
     /**
      * Unit tests for the timeAfterDuration method
