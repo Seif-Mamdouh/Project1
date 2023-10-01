@@ -1,7 +1,5 @@
 package scheduler;
 
-import java.util.Arrays;
-
 /**
  * Represents contact information of a department.
  * Contains their department and email.
@@ -57,8 +55,13 @@ public class Contact {
      */
     public boolean isValid() {
 
-        boolean validEnum = Arrays.stream(Department.values())
-                                  .anyMatch(dep -> department.equals(dep));
+        boolean validEnum = false;
+        for(Department dep : Department.values()){
+            if(dep.equals(this.department)){
+                validEnum = true;
+                break;
+            }
+        }
         return validEnum && this.isEmailValid();
 
     }
