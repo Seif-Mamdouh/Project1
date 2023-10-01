@@ -82,13 +82,13 @@ public class Event implements Comparable<Event> {
 //        Timeslot endTime = startTime.getEndTimeslot(duration);
 
         String baseString =
-                "[Event Date: %s] [Start: %s] [End: IMPLEMENTATION of endTime method awaiting] " +
+                "[Event Date: %s] [Start: %s] [End: %s] " +
                 "%s [Contact: %s]";
         return String.format(
                 baseString,
                 this.date.toString(),
                 this.startTime.toString(),
-//                endTime.toString(),
+                this.startTime.timeAfterDuration(this.duration),
                 this.location.toString(),
                 this.contact.toString()
         );
