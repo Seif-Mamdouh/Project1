@@ -14,14 +14,11 @@ public class EventOrganizer {
 
 
     /**
-     * Setter for the eventCalendar in EventOrganizer
-     *
-     * @param eventCalendar
+     * Create empty EventOrganizer
      */
-    public void setEventCalendar(EventCalendar eventCalendar) {
-        this.eventCalendar = eventCalendar;
+    public EventOrganizer() {
+        this.eventCalendar = new EventCalendar();
     }
-
 
     /**
      * private static numbers to avoid magic numbers
@@ -45,13 +42,6 @@ public class EventOrganizer {
      *                   DEPARTMENT VALID-EMAIL TIME(min)".
      * @throws IllegalArgumentException If the commandAdd string does not
      * match the expected format.
-     */
-
-
-    /**
-     * helper method to parse a string and add an event to the calendar
-     *
-     * @param commandAdd string to parse
      */
     public void addEvent(String commandAdd) {
         // parse the command and split it to read it
@@ -192,7 +182,7 @@ public class EventOrganizer {
      * Method to remove a Event from the Event List using the the Date to
      * search for the event
      *
-     * @param dateToRemove date of event to remove
+     * @param dateToRemove  date of event to remove
      * @param timeSlotToken timeSlot of event to remove
      * @param locationToken location of event to remove
      */
@@ -304,18 +294,6 @@ public class EventOrganizer {
         scanner.close();
     }
 
-    /**
-     * Runs event calendar
-     * @param args unused, does not take command line args
-     */
-    public static void main(String[] args) {
-        EventCalendar eventCalendar = new EventCalendar();
-
-        // Create EventOrganizer and set the EventCalendar
-        EventOrganizer organizer = new EventOrganizer();
-        organizer.setEventCalendar(eventCalendar);
-        organizer.run();
-    }
 }
 
 
