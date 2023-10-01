@@ -98,11 +98,18 @@ public class EventOrganizer {
 
             Department department =
                     Department.valueOf(tokens[DEPARTMENT_TOKEN_INDEX].toUpperCase());
+
             String contactEmail = tokens[CONTACT_EMAIL_TOKEN_INDEX];
+
             int duration = Integer.parseInt(tokens[DURATION_TOKEN_INDEX]);
 
-            Contact contact = new Contact(department, contactEmail);
+            // check if the event duration is between 30 to 120 mins
+            if (!timeSlot.isValidDuration(duration)) {
+                System.out.println("Event duration must be at least 30 minutes and at most 120 minutes");
+                return;
+            }
 
+            Contact contact = new Contact(department, contactEmail);
             if (!contact.isValid()) {
                 System.out.println("Invalid contact information!");
                 return;

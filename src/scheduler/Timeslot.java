@@ -100,6 +100,16 @@ public enum Timeslot {
 
     }
 
+    /**
+     * Method to check if the user's input is between 30 to 120
+     * returns false otherwise
+     * @param duration
+     * @return
+     */
+    public boolean isValidDuration(int duration){
+        return duration >= 30 && duration <= 120;
+    }
+
 
     /**
      * Unit tests for the timeAfterDuration method
