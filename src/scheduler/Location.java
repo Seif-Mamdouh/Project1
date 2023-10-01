@@ -27,6 +27,22 @@ public enum Location {
     }
 
     /**
+     * Checks if a given location string is valid by comparing it to the known building names
+     * in the Location enum.
+     *
+     * @param givenUserLocation The location string to validate.
+     * @return true if the location string is a valid building name, false otherwise.
+     */
+    public static boolean isValidLocation(String givenUserLocation) {
+        for (Location location : values()) {
+            if (location.buildingName.equalsIgnoreCase(givenUserLocation)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * String representation of location
      *
      * @return building name concatenated with campus name
@@ -52,6 +68,10 @@ public enum Location {
     public String getCampusName() {
         return campusName;
     }
+
+//    public static boolean isValidLocation(Location location) {
+
+//    }
 
     public static void main(String[] args) {
         System.out.println(Location.HLL114 + " - " + Location.HLL114);

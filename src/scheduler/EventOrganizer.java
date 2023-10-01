@@ -42,9 +42,11 @@ public class EventOrganizer {
      * @throws IllegalArgumentException If the commandAdd string does not
      *                                  match the expected format.
      */
+
+
     public void addEvent(String commandAdd) {
         // parse the command and split it to read it
-        String[] tokens = commandAdd.split(" ");
+        String[] tokens = commandAdd.split("\\s+");
 
         int numberOfTokensExpected = 7;
         if (tokens.length != numberOfTokensExpected) {
@@ -84,8 +86,16 @@ public class EventOrganizer {
 
             Timeslot timeSlot =
                     Timeslot.valueOf(tokens[TIMESLOT_TOKEN_INDEX].toUpperCase());
-            Location location =
-                    Location.valueOf(tokens[LOCATION_TOKEN_INDEX].toUpperCase());
+            String locationToken = tokens[LOCATION_TOKEN_INDEX].toUpperCase();
+
+            if (Location.isValidLocation(locationToken)) {
+                System.out.println("Invalid location!");
+                return;
+            };
+
+            Location location = Location.valueOf(locationToken);
+
+
             Department department =
                     Department.valueOf(tokens[DEPARTMENT_TOKEN_INDEX].toUpperCase());
             String contactEmail = tokens[CONTACT_EMAIL_TOKEN_INDEX];
