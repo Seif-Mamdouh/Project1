@@ -37,11 +37,11 @@ public class EventOrganizer {
      * a new event to the event calendar
      *
      * @param commandAdd A string containing information to create and add an
-     *                  event.
+     *                   event.
      *                   The expected format is "A DATE TIMESLOT LOCATION
      *                   DEPARTMENT VALID-EMAIL TIME(min)".
      * @throws IllegalArgumentException If the commandAdd string does not
-     * match the expected format.
+     *                                  match the expected format.
      */
     public void addEvent(String commandAdd) {
         // parse the command and split it to read it

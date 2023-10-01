@@ -28,9 +28,9 @@ public class Date implements Comparable<Date> {
     /**
      * Default Constructor that sets year month date
      *
-     * @param year  of date
-     * @param month of date
-     * @param day   of date
+     * @param year  year of date
+     * @param month month of date
+     * @param day   day of date
      */
     public Date(int year, int month, int day) {
         this.year = year;
@@ -195,7 +195,8 @@ public class Date implements Comparable<Date> {
      * Compare dates by their year then month then day
      *
      * @param otherDate the date to be compared.
-     * @return < 0 if this date is before otherDate, > 0 if this date is
+     * @return int smaller than 0 if this date is before otherDate, greater
+     * than 0 if this date is after otherDate and 0 if they are equal
      * after otherDate, and 0 if they are the same date
      */
     public int compareTo(Date otherDate) {

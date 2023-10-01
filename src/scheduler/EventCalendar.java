@@ -116,7 +116,7 @@ public class EventCalendar {
      * print the array as is
      */
     public void print() {
-        for(int i = 0; i < this.numEvents; i++){
+        for (int i = 0; i < this.numEvents; i++) {
             System.out.println(this.events[i]);
         }
 
@@ -129,6 +129,14 @@ public class EventCalendar {
      */
     @FunctionalInterface
     private interface CustomComparator<T> {
+        /**
+         * Compares 2 things of type T
+         *
+         * @param a first thing to compare
+         * @param b second thing to compare
+         * @return negative number if a is less than b, positive number if a
+         * is greater than b, and 0 if they are equal
+         */
         int compare(T a, T b);
     }
 
@@ -175,7 +183,11 @@ public class EventCalendar {
      * prints events ordered by campus and building/room
      */
     public void printByCampus() {
-        CustomComparator<Event> campusBuildingComparator = (event1, event2) -> event1.getLocation().getCampusName().compareTo(event2.getLocation().getCampusName());
+        CustomComparator<Event> campusBuildingComparator =
+                (event1, event2) -> event1.getLocation()
+                                          .getCampusName()
+                                          .compareTo(event2.getLocation()
+                                                           .getCampusName());
 
         EventCalendar.bubbleSort(this.events,
                                  this.numEvents,
@@ -191,9 +203,11 @@ public class EventCalendar {
     public void printByDepartment() {
         CustomComparator<Event> departmentComparator =
                 (event1, event2) -> event1.getContact()
-                                          .getDepartment().toString()
+                                          .getDepartment()
+                                          .toString()
                                           .compareTo(event2.getContact()
-                                                           .getDepartment().toString());
+                                                           .getDepartment()
+                                                           .toString());
 
         EventCalendar.bubbleSort(this.events,
                                  this.numEvents,
@@ -204,8 +218,10 @@ public class EventCalendar {
     }
 
     /**
-     * Method to check if the event exists by checking if the DATE/TIMESLOT/LOCATION already exists
-     * @param eventToCheck
+     * Method to check if the event exists by checking if the
+     * DATE/TIMESLOT/LOCATION already exists
+     *
+     * @param eventToCheck event that we are checking exists or not
      * @return True if the event is already in the calendar, false otherwise
      */
     public boolean hasConflict(Event eventToCheck) {

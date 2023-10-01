@@ -63,7 +63,8 @@ public enum Timeslot {
 
     /**
      * String representation of starting time of this Timeslot
-     * H:M(AM/PM), minutes are padded with a leading 0 if < 10
+     * H:M(AM/PM), minutes are padded with a leading 0 if minutes are less
+     * than 10
      *
      * @return string representation of Timeslot start time
      */

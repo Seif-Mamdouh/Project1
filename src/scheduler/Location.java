@@ -35,10 +35,20 @@ public enum Location {
         return this.buildingName + ", " + this.campusName;
     }
 
+    /**
+     * Getter for building name
+     *
+     * @return buildingName belonging to this location
+     */
     public String getBuildingName() {
         return buildingName;
     }
 
+    /**
+     * Getter for campus name
+     *
+     * @return campusName belonging to this location
+     */
     public String getCampusName() {
         return campusName;
     }

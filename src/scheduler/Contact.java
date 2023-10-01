@@ -56,8 +56,8 @@ public class Contact {
     public boolean isValid() {
 
         boolean validEnum = false;
-        for(Department dep : Department.values()){
-            if(dep.equals(this.department)){
+        for (Department dep : Department.values()) {
+            if (dep.equals(this.department)) {
                 validEnum = true;
                 break;
             }
@@ -78,7 +78,8 @@ public class Contact {
 
     /**
      * Get string representation consisting of department - email
-     * @return
+     *
+     * @return string representation
      */
     @Override
     public String toString() {

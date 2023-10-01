@@ -50,7 +50,9 @@ public class Event implements Comparable<Event> {
         }
         Event otherEvent = (Event) obj;
 
-        return (this.compareTo(otherEvent) == 0 && this.location.equals(otherEvent.getLocation()));
+        return (this.compareTo(otherEvent) == 0 &&
+                this.location.equals(otherEvent.getLocation())
+        );
 
     }
 
@@ -58,8 +60,9 @@ public class Event implements Comparable<Event> {
      * Compare Events' dates and use startTimes to break ties.
      *
      * @param event the object to be compared
-     * @return negative integer if this < event, positive integer if this >
-     * event, and 0 if equal
+     * @return negative integer if this event is before passed in
+     * event, positive integer if this event is after passed in
+     * event, and 0 if the events are equal
      */
     @Override
     public int compareTo(Event event) {
@@ -82,8 +85,7 @@ public class Event implements Comparable<Event> {
 //        Timeslot endTime = startTime.getEndTimeslot(duration);
 
         String baseString =
-                "[Event Date: %s] [Start: %s] [End: %s] " +
-                "%s [Contact: %s]";
+                "[Event Date: %s] [Start: %s] [End: %s] " + "%s [Contact: %s]";
         return String.format(
                 baseString,
                 this.date.toString(),
@@ -130,7 +132,12 @@ public class Event implements Comparable<Event> {
         return this.startTime;
     }
 
-    public int getDuration(){
+    /**
+     * Getter for duration
+     *
+     * @return duration
+     */
+    public int getDuration() {
         return duration;
     }
 }
