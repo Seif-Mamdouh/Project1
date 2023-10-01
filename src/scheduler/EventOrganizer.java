@@ -92,14 +92,19 @@ public class EventOrganizer {
             int duration = Integer.parseInt(tokens[DURATION_TOKEN_INDEX]);
 
             Contact contact = new Contact(department, contactEmail);
+
+            if (!contact.isValid()) {
+                System.out.println("Invalid contact information!");
+                return;
+            }
+
             Event newEvent =
                     new Event(eventDate, timeSlot, location, contact, duration);
             boolean hasConflict = eventCalendar.hasConflict(newEvent);
 
             if (hasConflict) {
                 System.out.println(
-                        "Conflict of schedule - an event with the same " +
-                        "date/timeslot/location is already on the calendar.");
+                        "Conflict of schedule - an event with the same ");
             }
             else if (eventCalendar.add(newEvent)) {
                 System.out.println("Event added successfully.");
@@ -111,6 +116,7 @@ public class EventOrganizer {
             }
         }
         catch (Exception e) {
+            System.out.println(e);
             System.out.println("Invalid Add input, please recheck your input");
         }
     }

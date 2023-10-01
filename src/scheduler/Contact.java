@@ -38,7 +38,7 @@ public class Contact {
         String emailAddress = splitEmail[emailIndex];
         String emailDomain = splitEmail[domainIndex];
         for (char c : emailAddress.toCharArray()) {
-            if (!Character.isDigit(c) || !Character.isLetter(c)) {
+            if (!Character.isDigit(c) && !Character.isLetter(c)) {
                 return false;
             }
         }
@@ -46,7 +46,6 @@ public class Contact {
         String expectedDomainName = "rutgers.edu";
         return emailDomain.equals(expectedDomainName);
     }
-
     /**
      * Check if email and department instance variables are valid.
      *
