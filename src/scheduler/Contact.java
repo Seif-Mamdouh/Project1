@@ -30,12 +30,15 @@ public class Contact {
      */
     private boolean isEmailValid() {
         String[] splitEmail = email.split("@");
-        if (splitEmail.length != 2) {
+
+        int expectedSplitLength = 2;
+        if (splitEmail.length != expectedSplitLength) {
             return false;
         }
 
-        String emailAddress = splitEmail[0];
-        String emailDomain = splitEmail[1];
+        int emailIndex = 0, domainIndex = 1;
+        String emailAddress = splitEmail[emailIndex];
+        String emailDomain = splitEmail[domainIndex];
         for (char c : emailAddress.toCharArray()) {
             if (!Character.isDigit(c) || !Character.isLetter(c)) {
                 return false;

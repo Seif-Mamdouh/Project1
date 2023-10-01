@@ -206,17 +206,17 @@ public class EventOrganizer {
         Location location = Location.valueOf(locationToken.toUpperCase());
 
         //Intilaize the rest of default value for the event class
-        Department department = Department.CS;
-        String contactEmail = "cs@rutgers.edu";
-        int duration = 60;
+        Department CouldBeAnyDepartment = Department.CS;
+        String CouldBeAnyContactEmail = "cs@rutgers.edu";
+        int CouldBeAnyDuration = 60;
 
         // Create an event with user-specified parameters
         Event eventToRemove = new Event(
                 date,
                 timeslot,
                 location,
-                new Contact(department, contactEmail),
-                duration
+                new Contact(CouldBeAnyDepartment, CouldBeAnyContactEmail),
+                CouldBeAnyDuration
         );
 
         // Remove the event from the calendar
@@ -246,13 +246,14 @@ public class EventOrganizer {
 
         String commandType = tokens[0];
 
+        int expectedTokensInRCase = 3;
         // Perform actions based on the command type
         switch (commandType) {
             case "A":
                 addEvent(commandLine);
                 break;
             case "R":
-                if (tokens.length >= 3) {
+                if (tokens.length >= expectedTokensInRCase) {
                     String dateToken = tokens[1];
                     String timeSlotToken = tokens[2];
                     String locationToken = tokens[3];

@@ -14,6 +14,13 @@ public class Date implements Comparable<Date> {
     public static final int CENTENNIAL = 100;
     public static final int QUATERCENTENNIAL = 400;
 
+    public static final int MONTHS_IN_YEAR = 12;
+
+    public static final int DAYS_IN_FEBUARY_IN_LEAP_YEAR = 29;
+
+    public static final int FEBUARY_MONTH_NUMBER = 2;
+
+
     private int year; //the year componenent in date
     private int month; //the month componenent in date
     private int day; //the day componenent in date
@@ -78,9 +85,10 @@ public class Date implements Comparable<Date> {
         int month, day, year;
 
         try {
-            month = Integer.parseInt(dateSplit[0]);
-            day = Integer.parseInt(dateSplit[1]);
-            year = Integer.parseInt(dateSplit[2]);
+            int monthIndex = 0, dayIndex = 1, yearIndex = 2;
+            month = Integer.parseInt(dateSplit[monthIndex]);
+            day = Integer.parseInt(dateSplit[dayIndex]);
+            year = Integer.parseInt(dateSplit[yearIndex]);
         }
         catch (NumberFormatException e) {
             throw new IllegalArgumentException(
@@ -100,7 +108,7 @@ public class Date implements Comparable<Date> {
      * @return true if the date is valid, false otherwise
      */
     public boolean isValid() {
-        if (this.month < 1 || this.month > 12 || this.year < 0) {
+        if (this.month < 1 || this.month > MONTHS_IN_YEAR || this.year < 0) {
             return false;
         }
         ;
@@ -108,8 +116,8 @@ public class Date implements Comparable<Date> {
 
         int daysInTheCurrentMonth = dayInMonthConstant[this.month];
 
-        if (isLeapYear(year) && this.month == 2) {
-            daysInTheCurrentMonth = 29;
+        if (isLeapYear(year) && this.month == FEBUARY_MONTH_NUMBER) {
+            daysInTheCurrentMonth = DAYS_IN_FEBUARY_IN_LEAP_YEAR;
         }
 
         return this.day >= 1 && this.day <= daysInTheCurrentMonth;
@@ -128,7 +136,8 @@ public class Date implements Comparable<Date> {
         // Calculate the difference in months
         long monthsDifference = this.getMonthDifference(todayDate, targetDate);
 
-        return monthsDifference > 6;
+        int mostMonthDifferenceBeforeReturningTrue = 6;
+        return monthsDifference > mostMonthDifferenceBeforeReturningTrue;
     }
 
 
@@ -155,7 +164,8 @@ public class Date implements Comparable<Date> {
     private boolean isLeapYear(int year) {
         // Check if the year is a leap year (divisible by 4, not divisible by
         // 100, or divisible by 400)
-        return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+        return (year % QUADRENNIAL == 0 && year % CENTENNIAL != 0) ||
+               (year % QUATERCENTENNIAL == 0);
     }
 
     /**
@@ -171,7 +181,7 @@ public class Date implements Comparable<Date> {
         int endYear = endDate.get(Calendar.YEAR);
         int endMonth = endDate.get(Calendar.MONTH);
 
-        return (endYear - startYear) * 12 + (endMonth - startMonth);
+        return (endYear - startYear) * MONTHS_IN_YEAR + (endMonth - startMonth);
     }
 
 
