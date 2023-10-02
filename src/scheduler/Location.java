@@ -70,6 +70,7 @@ public enum Location {
         return campusName;
     }
 
+
 //    public static boolean isValidLocation(Location location) {
 
 //    }

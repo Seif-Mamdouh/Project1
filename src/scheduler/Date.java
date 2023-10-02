@@ -247,7 +247,7 @@ public class Date implements Comparable<Date> {
 //        System.out.println("date8 is: " + date8.isValid());
 
 
-        System.out.println(date7 + " is "+ date7.isMoreThanSixMonthsAway());
+        System.out.println(date7 + " is "+ date7.isValid());
 
         // Test the compareTo method
 //        System.out.println("Comparing date1 to date2: " + date1.compareTo(date2));

@@ -180,8 +180,9 @@ public class EventOrganizer {
             return;
         }
 
-        System.out.println("Event Calendar (Sorted by Date):");
+        System.out.println("* Event calendar by event date and start time *");
         eventCalendar.printByDate();
+        System.out.println("* end of event calendar *");
     }
 
     /**
@@ -195,8 +196,9 @@ public class EventOrganizer {
             System.out.println(EVENT_CALENDAR_EMPTY_MESSAGE);
             return;
         }
-        System.out.println("Event Calendar (Sorted by Campus): ");
+        System.out.println("* Event calendar by campus and building *");
         eventCalendar.printByCampus();
+        System.out.println("* end of event calendar *");
     }
 
 
@@ -236,13 +238,13 @@ public class EventOrganizer {
         }
 
         if (date.isMoreThanSixMonthsAway()) {
-            System.out.println(
-                    date + ": Event date must be within 6 months!");
+            System.out.println(date + ": Event date must be within 6 months!");
             return;
         }
 
         if(!date.isFutureDate()){
             System.out.println(date + ": Event date must be a future date!");
+            return;
         }
 
         Timeslot timeslot = Timeslot.valueOf(timeSlotToken.toUpperCase());
@@ -264,10 +266,10 @@ public class EventOrganizer {
 
         // Remove the event from the calendar
         if (eventCalendar.remove(eventToRemove)) {
-            System.out.println("Event removed successfully.");
+            System.out.println("Event has been removed from the calendar!");
         }
         else {
-            System.out.println("Event not found. Nothing to remove.");
+            System.out.println("Cannot remove; event is not in the calendar!");
         }
     }
 

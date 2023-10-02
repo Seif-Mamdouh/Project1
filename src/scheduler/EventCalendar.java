@@ -182,19 +182,29 @@ public class EventCalendar {
      * prints events ordered by campus and building/room
      */
     public void printByCampus() {
-        CustomComparator<Event> campusBuildingComparator =
-                (event1, event2) -> event1.getLocation()
-                                          .getCampusName()
-                                          .compareTo(event2.getLocation()
-                                                           .getCampusName());
+        CustomComparator<Event> buildingCampusComparator = (event1, event2) -> {
 
-        EventCalendar.bubbleSort(this.events,
-                                 this.numEvents,
-                                 campusBuildingComparator
-        );
+            String buildingName1 = event1.getLocation().getBuildingName();
+            String campusName1 = event1.getLocation().getCampusName();
+
+            String buildingName2 = event2.getLocation().getBuildingName();
+            String campusName2 = event2.getLocation().getCampusName();
+
+            // Compare building names first
+            int CampusNameComparison = campusName1.compareTo(campusName2);
+            int BuildingNameComparison = buildingName1.compareTo(buildingName2);
+
+            if (CampusNameComparison == 0) {
+                return BuildingNameComparison;
+            }
+                return CampusNameComparison;
+        };
+
+        EventCalendar.bubbleSort(this.events, this.numEvents, buildingCampusComparator);
 
         this.print();
     }
+
 
     /**
      * prints events ordered by department
