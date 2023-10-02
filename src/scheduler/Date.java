@@ -13,7 +13,6 @@ public class Date implements Comparable<Date> {
     public static final int QUADRENNIAL = 4;
     public static final int CENTENNIAL = 100;
     public static final int QUATERCENTENNIAL = 400;
-
     public static final int MONTHS_IN_YEAR = 12;
 
     public static final int DAYS_IN_FEBUARY_IN_LEAP_YEAR = 29;
@@ -237,22 +236,14 @@ public class Date implements Comparable<Date> {
         Date date8 = new Date(-2023, 12, 2);
 
         // Test the isValid method
-//        System.out.println("date1 is : " + date1.isValid());
-//        System.out.println("date2 is : " + date2.isValid());
-//        System.out.println("date3 is : " + date3.isValid());
-//        System.out.println("date4 is: " + date4.isValid());
-//        System.out.println("date5 is: " + date5.isValid());
-//        System.out.println("date6 is: " + date6.isValid());
-//        System.out.println("date7 is: " + date7.isValid());
-//        System.out.println("date8 is: " + date8.isValid());
-
-
-        System.out.println(date7 + " is "+ date7.isValid());
-
-        // Test the compareTo method
-//        System.out.println("Comparing date1 to date2: " + date1.compareTo(date2));
-//        System.out.println("Comparing date2 to date3: " + date2.compareTo(date3));
-//        System.out.println("Comparing date1 to date3: " + date1.compareTo(date3));
+        assert  date1.isValid();
+        assert date2.isValid();
+        assert date3.isValid();
+        assert date4.isValid();
+        assert date5.isValid();
+        assert date6.isValid();
+        assert date7.isValid();
+        assert date8.isValid();
     }
 };
 

@@ -183,7 +183,7 @@ public class EventCalendar {
      */
     public void printByCampus() {
         CustomComparator<Event> buildingCampusComparator = (event1, event2) -> {
-
+            // Get the building name and campus name from event1's location
             String buildingName1 = event1.getLocation().getBuildingName();
             String campusName1 = event1.getLocation().getCampusName();
 
@@ -194,10 +194,12 @@ public class EventCalendar {
             int CampusNameComparison = campusName1.compareTo(campusName2);
             int BuildingNameComparison = buildingName1.compareTo(buildingName2);
 
+            // If building names are the same, compare campus names
             if (CampusNameComparison == 0) {
                 return BuildingNameComparison;
-            }
+            } else {
                 return CampusNameComparison;
+            }
         };
 
         EventCalendar.bubbleSort(this.events, this.numEvents, buildingCampusComparator);
