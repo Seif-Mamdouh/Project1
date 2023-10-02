@@ -32,4 +32,13 @@ public enum Department {
     public String toString() {
         return fullName;
     }
+
+    public static boolean isValidDepartment(String givenUserDepartment) {
+        for (Department department : values()) {
+            if (department.name().equalsIgnoreCase(givenUserDepartment)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

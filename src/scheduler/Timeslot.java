@@ -100,6 +100,9 @@ public enum Timeslot {
 
     }
 
+    private final static int MIN_MINS = 30;
+    private final static int MAX_MINS = 120;
+
     /**
      * Method to check if the user's input is between 30 to 120
      * returns false otherwise
@@ -107,7 +110,7 @@ public enum Timeslot {
      * @return
      */
     public boolean isValidDuration(int duration){
-        return duration >= 30 && duration <= 120;
+        return duration >= MIN_MINS && duration <= MAX_MINS;
     }
 
 

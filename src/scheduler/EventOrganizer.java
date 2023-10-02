@@ -86,9 +86,10 @@ public class EventOrganizer {
 
             Timeslot timeSlot =
                     Timeslot.valueOf(tokens[TIMESLOT_TOKEN_INDEX].toUpperCase());
+
             String locationToken = tokens[LOCATION_TOKEN_INDEX].toUpperCase();
 
-            if (Location.isValidLocation(locationToken)) {
+            if (!Location.isValidLocation(locationToken)) {
                 System.out.println("Invalid location!");
                 return;
             };
@@ -96,8 +97,14 @@ public class EventOrganizer {
             Location location = Location.valueOf(locationToken);
 
 
-            Department department =
-                    Department.valueOf(tokens[DEPARTMENT_TOKEN_INDEX].toUpperCase());
+            String departmentToken =
+                    tokens[DEPARTMENT_TOKEN_INDEX].toUpperCase();
+
+            if(!Department.isValidDepartment(departmentToken)){
+                System.out.println("Invalid department information");
+                return;
+            };
+            Department department = Department.valueOf(departmentToken);
 
             String contactEmail = tokens[CONTACT_EMAIL_TOKEN_INDEX];
 

@@ -35,7 +35,7 @@ public enum Location {
      */
     public static boolean isValidLocation(String givenUserLocation) {
         for (Location location : values()) {
-            if (location.buildingName.equalsIgnoreCase(givenUserLocation)) {
+            if (location.name().equalsIgnoreCase(givenUserLocation)) {
                 return true;
             }
         }
@@ -77,4 +77,5 @@ public enum Location {
         System.out.println(Location.HLL114 + " - " + Location.HLL114);
         System.out.println(Location.ARC103 + " - " + Location.ARC103);
     }
+
 }
