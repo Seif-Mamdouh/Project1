@@ -1,5 +1,6 @@
 package scheduler;
 
+import java.io.FileNotFoundException;
 import java.sql.Time;
 import java.util.Scanner;
 
@@ -12,12 +13,16 @@ import java.util.Scanner;
 
 public class EventOrganizer {
     private EventCalendar eventCalendar;
-
+    private boolean testMode = false;
     /**
      * Create empty EventOrganizer
      */
     public EventOrganizer() {
         this.eventCalendar = new EventCalendar();
+    }
+    public EventOrganizer(boolean testMode) {
+        this.eventCalendar = new EventCalendar();
+        this.testMode = true;
     }
 
     /**
@@ -65,7 +70,7 @@ public class EventOrganizer {
             // Check if the date is in a valid format
             if (!eventDate.isValid()) {
                 System.out.println(
-                        eventDate + " Invalid date format.");
+                        eventDate + ": Invalid calendar date!");
                 return;
             }
 
@@ -79,14 +84,14 @@ public class EventOrganizer {
 
             // Check if the date is a future date
             if (!eventDate.isFutureDate()) {
-                System.out.println( eventDate + ":Event date should be a future date.");
+                System.out.println( eventDate + ": Event date must be a future date!");
                 return;
             }
 
             String timeSlotToken = tokens[TIMESLOT_TOKEN_INDEX].toUpperCase();
 
             if(!Timeslot.isValidTimeSlot(timeSlotToken)){
-                System.out.println("Invalid TimeSlot");
+                System.out.println("Invalid time slot!");
                 return;
             }
 
@@ -132,7 +137,7 @@ public class EventOrganizer {
 
             if (hasConflict) {
                 System.out.println(
-                        "Conflict of schedule - an event with the same ");
+                        "The event is already on the calendar.");
             }
             else if (eventCalendar.add(newEvent)) {
                 System.out.println("Event added to the calendar.");
@@ -147,7 +152,7 @@ public class EventOrganizer {
             System.out.println("Invalid Add input, please recheck your input");
         }
     }
-
+    private static String EVENT_CALENDAR_EMPTY_MESSAGE = "Event calendar is empty!";
     /**
      * Displays all the current events in the event calendar
      */
@@ -155,7 +160,7 @@ public class EventOrganizer {
         int numberEvents = eventCalendar.getNumEvents();
 
         if (numberEvents == 0) {
-            System.out.println("The Event Calendar is empty");
+            System.out.println(EVENT_CALENDAR_EMPTY_MESSAGE);
             return;
         }
         else {
@@ -170,7 +175,7 @@ public class EventOrganizer {
         int numberEvents = eventCalendar.getNumEvents();
 
         if (numberEvents == 0) {
-            System.out.println("The Event Calendar is empty");
+            System.out.println(EVENT_CALENDAR_EMPTY_MESSAGE);
             return;
         }
 
@@ -186,7 +191,7 @@ public class EventOrganizer {
         int numberEvents = eventCalendar.getNumEvents();
 
         if (numberEvents == 0) {
-            System.out.println("The Event Calendar is empty");
+            System.out.println(EVENT_CALENDAR_EMPTY_MESSAGE);
             return;
         }
         System.out.println("Event Calendar (Sorted by Campus): ");
@@ -202,7 +207,7 @@ public class EventOrganizer {
         int numberEvents = eventCalendar.getNumEvents();
 
         if (numberEvents == 0) {
-            System.out.println("The Event Calendar is empty");
+            System.out.println(EVENT_CALENDAR_EMPTY_MESSAGE);
             return;
         }
         System.out.println("The Event Calendar (Sorted by Department): ");
@@ -309,8 +314,24 @@ public class EventOrganizer {
      * Runs the UI for the organizer, takes input and processes it
      */
     public void run() {
+
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Event Organizer running...");
+        java.io.PrintStream oldOut = System.out;
+
+        if(this.testMode){
+
+            try {
+                scanner = new Scanner(new java.io.File("sample_inputs.txt"));
+                System.setOut(new java.io.PrintStream(new java.io.FileOutputStream("this_run_output.txt")));
+            }
+            catch (FileNotFoundException e){
+                System.out.println("file not found");
+                return;
+            }
+            java.io.InputStream outputCheck = null;
+        }
+
+        System.out.println("Event Organizer running...\n");
 
         while (true) {
 //            System.out.print("Enter command: ");
@@ -324,6 +345,41 @@ public class EventOrganizer {
                 continue;
             }
             processCommand(commandLine);
+        }
+        if(this.testMode){
+            Scanner programOutputScanner = null;
+            Scanner expectedOutputScanner = null;
+            try {
+                programOutputScanner = new Scanner(new java.io.File("this_run_output.txt"));
+                expectedOutputScanner = new Scanner(new java.io.File("sample_outputs.txt"));
+                System.setOut(oldOut);
+            }
+            catch (FileNotFoundException e){
+               System.out.println("Couldn't check");
+            }
+            int allowedError = 1;
+            int line = 1;
+            while(programOutputScanner.hasNext() && expectedOutputScanner.hasNext()){
+                String programOuput = programOutputScanner.nextLine();
+                String expectedOutput = expectedOutputScanner.nextLine();
+
+                if (!programOuput.equals(expectedOutput)) {
+                    System.out.println(String.format("program output: '%s', expected output: '%s', line %d", programOuput, expectedOutput, line));
+                    allowedError --;
+                    if(allowedError < 0){
+                        throw new AssertionError();
+                    }
+
+                    //System.out.println(new AssertionError());
+                }
+
+
+                //System.out.println(String.format("\n comparing from run: '%s' to \n expected: '%s' \n", programOuput, expectedOutput));
+                line ++;
+            }
+            programOutputScanner.close();
+            expectedOutputScanner.close();
+            System.out.println("Everything is correct");
         }
         scanner.close();
     }
