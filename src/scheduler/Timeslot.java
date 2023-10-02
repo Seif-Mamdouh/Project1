@@ -109,8 +109,18 @@ public enum Timeslot {
      * @param duration
      * @return
      */
-    public boolean isValidDuration(int duration){
+    public static boolean isValidDuration(int duration){
         return duration >= MIN_MINS && duration <= MAX_MINS;
+    }
+
+
+    public static boolean isValidTimeSlot(String userInputTimeSlot){
+        for (Timeslot timeslot : values()) {
+            if (timeslot.name().equalsIgnoreCase(userInputTimeSlot)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 

@@ -1,5 +1,6 @@
 package scheduler;
 
+import java.sql.Time;
 import java.util.Scanner;
 
 
@@ -42,8 +43,6 @@ public class EventOrganizer {
      * @throws IllegalArgumentException If the commandAdd string does not
      *                                  match the expected format.
      */
-
-
     public void addEvent(String commandAdd) {
         // parse the command and split it to read it
         String[] tokens = commandAdd.split("\\s+");
@@ -84,8 +83,14 @@ public class EventOrganizer {
                 return;
             }
 
-            Timeslot timeSlot =
-                    Timeslot.valueOf(tokens[TIMESLOT_TOKEN_INDEX].toUpperCase());
+            String timeSlotToken = tokens[TIMESLOT_TOKEN_INDEX].toUpperCase();
+
+            if(!Timeslot.isValidTimeSlot(timeSlotToken)){
+                System.out.println("Invalid TimeSlot");
+                return;
+            }
+
+            Timeslot timeslot = Timeslot.valueOf(timeSlotToken);
 
             String locationToken = tokens[LOCATION_TOKEN_INDEX].toUpperCase();
 
@@ -95,7 +100,6 @@ public class EventOrganizer {
             };
 
             Location location = Location.valueOf(locationToken);
-
 
             String departmentToken =
                     tokens[DEPARTMENT_TOKEN_INDEX].toUpperCase();
@@ -111,7 +115,7 @@ public class EventOrganizer {
             int duration = Integer.parseInt(tokens[DURATION_TOKEN_INDEX]);
 
             // check if the event duration is between 30 to 120 mins
-            if (!timeSlot.isValidDuration(duration)) {
+            if (!Timeslot.isValidDuration(duration)) {
                 System.out.println("Event duration must be at least 30 minutes and at most 120 minutes");
                 return;
             }
@@ -123,7 +127,7 @@ public class EventOrganizer {
             }
 
             Event newEvent =
-                    new Event(eventDate, timeSlot, location, contact, duration);
+                    new Event(eventDate, timeslot, location, contact, duration);
             boolean hasConflict = eventCalendar.hasConflict(newEvent);
 
             if (hasConflict) {
@@ -131,7 +135,7 @@ public class EventOrganizer {
                         "Conflict of schedule - an event with the same ");
             }
             else if (eventCalendar.add(newEvent)) {
-                System.out.println("Event added successfully.");
+                System.out.println("Event added to the calendar.");
             }
             else {
                 System.out.println(
@@ -140,7 +144,6 @@ public class EventOrganizer {
             }
         }
         catch (Exception e) {
-            System.out.println(e);
             System.out.println("Invalid Add input, please recheck your input");
         }
     }
@@ -310,12 +313,15 @@ public class EventOrganizer {
         System.out.println("Event Organizer running...");
 
         while (true) {
-            System.out.print("Enter command: ");
+//            System.out.print("Enter command: ");
             String commandLine = scanner.nextLine();
+            String trimCommand = commandLine.trim();
 
-            if (commandLine.trim().equalsIgnoreCase("Q")) {
+            if (trimCommand.equalsIgnoreCase("Q")) {
                 System.out.println("Event Organizer terminated.");
                 break;
+            } else if (trimCommand.isEmpty()){
+                continue;
             }
             processCommand(commandLine);
         }
