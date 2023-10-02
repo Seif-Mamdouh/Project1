@@ -12,6 +12,6 @@ public class RunProject1 {
      * @param args unused, does not use command line arguments
      */
     public static void main(String[] args) {
-        new EventOrganizer().run();
+        new EventOrganizer(true).run();
     }
 }

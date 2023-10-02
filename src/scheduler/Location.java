@@ -6,11 +6,12 @@ package scheduler;
  * @author Michael Muzafarov
  */
 public enum Location {
-    HILL114("Hill Center", "Busch"),
+    HLL114("Hill Center", "Busch"),
     ARC103("Allison Road Classroom", "Busch"),
     BE_AUD("Beck Hall", "Livingston"),
     TIL232("Tillett Hall", "Livingston"),
-    AB2225("Academic Building", "College Avenue");
+    AB2225("Academic Building", "College Avenue"),
+    MU302("Murray Hall", "College Avenue");
 
     private final String buildingName;
     private final String campusName;
@@ -27,12 +28,28 @@ public enum Location {
     }
 
     /**
+     * Checks if a given location string is valid by comparing it to the known building names
+     * in the Location enum.
+     *
+     * @param givenUserLocation The location string to validate.
+     * @return true if the location string is a valid building name, false otherwise.
+     */
+    public static boolean isValidLocation(String givenUserLocation) {
+        for (Location location : values()) {
+            if (location.name().equalsIgnoreCase(givenUserLocation)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * String representation of location
      *
      * @return building name concatenated with campus name
      */
     public String toString() {
-        return this.buildingName + ", " + this.campusName;
+        return "@" + this.name() + " (" + this.buildingName + ", " + this.campusName + ")";
     }
 
     /**
@@ -53,8 +70,14 @@ public enum Location {
         return campusName;
     }
 
+
+//    public static boolean isValidLocation(Location location) {
+
+//    }
+
     public static void main(String[] args) {
-        System.out.println(Location.HILL114 + " - " + Location.HILL114);
+        System.out.println(Location.HLL114 + " - " + Location.HLL114);
         System.out.println(Location.ARC103 + " - " + Location.ARC103);
     }
+
 }

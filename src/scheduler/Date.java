@@ -13,7 +13,6 @@ public class Date implements Comparable<Date> {
     public static final int QUADRENNIAL = 4;
     public static final int CENTENNIAL = 100;
     public static final int QUATERCENTENNIAL = 400;
-
     public static final int MONTHS_IN_YEAR = 12;
 
     public static final int DAYS_IN_FEBUARY_IN_LEAP_YEAR = 29;
@@ -102,17 +101,19 @@ public class Date implements Comparable<Date> {
     private static final int[] dayInMonthConstant =
             {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
+
+    private static int min_month = 1;
+    private static int min_year = 1900;
+
     /**
      * Check if the date is in a valid format (mm/dd/yyyy).
      *
      * @return true if the date is valid, false otherwise
      */
     public boolean isValid() {
-        if (this.month < 1 || this.month > MONTHS_IN_YEAR || this.year < 0) {
+        if (this.month < min_month || this.month > MONTHS_IN_YEAR || this.year < min_year) {
             return false;
         }
-        ;
-
 
         int daysInTheCurrentMonth = dayInMonthConstant[this.month];
 
@@ -137,7 +138,7 @@ public class Date implements Comparable<Date> {
         long monthsDifference = this.getMonthDifference(todayDate, targetDate);
 
         int mostMonthDifferenceBeforeReturningTrue = 6;
-        return monthsDifference > mostMonthDifferenceBeforeReturningTrue;
+        return monthsDifference >= mostMonthDifferenceBeforeReturningTrue;
     }
 
 
@@ -185,11 +186,6 @@ public class Date implements Comparable<Date> {
     }
 
 
-//    private boolean isValidMonth(int month) {
-//        // Check if the month is within a valid range (1 to 12)
-//        return month >= 1 && month <= 12;
-//    }
-
 
     /**
      * Compare dates by their year then month then day
@@ -224,22 +220,33 @@ public class Date implements Comparable<Date> {
     }
 
     /**
-     * Unit tests for the date's compareTo method
+     * Unit tests for the date's isValid() and compareTo() method
      *
      * @param args not used
      */
     public static void main(String[] args) {
-
-        Date date1 = new Date(2023, 9, 12);
+        // Test cases for your Date class
+        Date date1 = new Date(800, 9, 12);
         Date date2 = new Date(2023, 9, 11);
-        Date date3 = new Date(2023, 9, 11);
-        System.out.println(
-                "Comparing date1 to date2: " + date1.compareTo(date2));
-        System.out.println(
-                "Comparing date2 to date3: " + date2.compareTo(date3));
+        Date date3 = new Date(2024, 4, 29);
+        Date date4 = new Date(2024, 2, 29);
+        Date date5 = new Date(2023, 13, 12);
+        Date date6 = new Date(2023, 0, 12);
+        Date date7 = new Date(2024, 4, 22);
+        Date date8 = new Date(-2023, 12, 2);
 
+        // Test the isValid method
+        assert  date1.isValid();
+        assert date2.isValid();
+        assert date3.isValid();
+        assert date4.isValid();
+        assert date5.isValid();
+        assert date6.isValid();
+        assert date7.isValid();
+        assert date8.isValid();
     }
 };
+
 
 
 

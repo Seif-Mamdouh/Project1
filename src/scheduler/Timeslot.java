@@ -58,7 +58,7 @@ public enum Timeslot {
         String StringFormatWith2DigitPadding = "%02d";
         return Integer.toString(hour) + ":" +
                String.format(StringFormatWith2DigitPadding, minute) +
-               (amPm == Calendar.AM ? "AM" : "PM");
+               (amPm == Calendar.AM ? "am" : "pm");
     }
 
     /**
@@ -98,6 +98,29 @@ public enum Timeslot {
                                calendarForTime.get(Calendar.AM_PM)
         );
 
+    }
+
+    private final static int MIN_MINS = 30;
+    private final static int MAX_MINS = 120;
+
+    /**
+     * Method to check if the user's input is between 30 to 120
+     * returns false otherwise
+     * @param duration
+     * @return
+     */
+    public static boolean isValidDuration(int duration){
+        return duration >= MIN_MINS && duration <= MAX_MINS;
+    }
+
+
+    public static boolean isValidTimeSlot(String userInputTimeSlot){
+        for (Timeslot timeslot : values()) {
+            if (timeslot.name().equalsIgnoreCase(userInputTimeSlot)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 

@@ -6,11 +6,11 @@ package scheduler;
  * @author Michael Muzafarov
  */
 public enum Department {
-    CS("computer science"),
-    EE("electrical engineering"),
-    ITI("information technology and informatics"),
-    MATH("mathematics"),
-    BAIT("business analytics and information technology");
+    CS("Computer Science"),
+    EE("Electrical Engineering"),
+    ITI("Information Technology and Informatics"),
+    MATH("Mathematics"),
+    BAIT("Business Analytics and Information Technology");
 
     private final String fullName;
 
@@ -31,5 +31,14 @@ public enum Department {
     @Override
     public String toString() {
         return fullName;
+    }
+
+    public static boolean isValidDepartment(String givenUserDepartment) {
+        for (Department department : values()) {
+            if (department.name().equalsIgnoreCase(givenUserDepartment)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

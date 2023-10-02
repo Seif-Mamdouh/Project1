@@ -8,7 +8,6 @@ package scheduler;
 public class EventCalendar {
     private Event[] events; //the array holding the list of events
     private int numEvents; //current number of events in the array
-
     final static int NOT_FOUND = -1;
     final static int EQUAL_IN_COMPARABLE = 0;
     final static int INITIAL_AND_ADDITIONAL_ARRAY_CAPACITY = 4;
@@ -183,19 +182,31 @@ public class EventCalendar {
      * prints events ordered by campus and building/room
      */
     public void printByCampus() {
-        CustomComparator<Event> campusBuildingComparator =
-                (event1, event2) -> event1.getLocation()
-                                          .getCampusName()
-                                          .compareTo(event2.getLocation()
-                                                           .getCampusName());
+        CustomComparator<Event> buildingCampusComparator = (event1, event2) -> {
+            // Get the building name and campus name from event1's location
+            String buildingName1 = event1.getLocation().getBuildingName();
+            String campusName1 = event1.getLocation().getCampusName();
 
-        EventCalendar.bubbleSort(this.events,
-                                 this.numEvents,
-                                 campusBuildingComparator
-        );
+            String buildingName2 = event2.getLocation().getBuildingName();
+            String campusName2 = event2.getLocation().getCampusName();
+
+            // Compare building names first
+            int CampusNameComparison = campusName1.compareTo(campusName2);
+            int BuildingNameComparison = buildingName1.compareTo(buildingName2);
+
+            // If building names are the same, compare campus names
+            if (CampusNameComparison == 0) {
+                return BuildingNameComparison;
+            } else {
+                return CampusNameComparison;
+            }
+        };
+
+        EventCalendar.bubbleSort(this.events, this.numEvents, buildingCampusComparator);
 
         this.print();
     }
+
 
     /**
      * prints events ordered by department
@@ -245,7 +256,7 @@ public class EventCalendar {
         System.out.println(event1);
         Event event2 = new Event(new Date(2023, 9, 21),
                                  Timeslot.AFTERNOON,
-                                 Location.HILL114,
+                                 Location.HLL114,
                                  new Contact(Department.CS, "cs@rutgers.edu"),
                                  70
         );

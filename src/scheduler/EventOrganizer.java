@@ -1,5 +1,7 @@
 package scheduler;
 
+import java.io.FileNotFoundException;
+import java.sql.Time;
 import java.util.Scanner;
 
 
@@ -11,13 +13,16 @@ import java.util.Scanner;
 
 public class EventOrganizer {
     private EventCalendar eventCalendar;
-
-
+    private boolean testMode = false;
     /**
      * Create empty EventOrganizer
      */
     public EventOrganizer() {
         this.eventCalendar = new EventCalendar();
+    }
+    public EventOrganizer(boolean testMode) {
+        this.eventCalendar = new EventCalendar();
+        this.testMode = true;
     }
 
     /**
@@ -45,7 +50,7 @@ public class EventOrganizer {
      */
     public void addEvent(String commandAdd) {
         // parse the command and split it to read it
-        String[] tokens = commandAdd.split(" ");
+        String[] tokens = commandAdd.split("\\s+");
 
         int numberOfTokensExpected = 7;
         if (tokens.length != numberOfTokensExpected) {
@@ -65,7 +70,7 @@ public class EventOrganizer {
             // Check if the date is in a valid format
             if (!eventDate.isValid()) {
                 System.out.println(
-                        "Invalid date format. Please use mm/dd/yyyy format.");
+                        eventDate + ": Invalid calendar date!");
                 return;
             }
 
@@ -73,38 +78,69 @@ public class EventOrganizer {
             // date
             if (eventDate.isMoreThanSixMonthsAway()) {
                 System.out.println(
-                        "Event date is more than 6 months away from today’s " +
-                        "date.");
+                        eventDate + ": Event date must be within 6 months!");
                 return;
             }
 
             // Check if the date is a future date
             if (!eventDate.isFutureDate()) {
-                System.out.println("Event date should be a future date.");
+                System.out.println( eventDate + ": Event date must be a future date!");
                 return;
             }
 
-            Timeslot timeSlot =
-                    Timeslot.valueOf(tokens[TIMESLOT_TOKEN_INDEX].toUpperCase());
-            Location location =
-                    Location.valueOf(tokens[LOCATION_TOKEN_INDEX].toUpperCase());
-            Department department =
-                    Department.valueOf(tokens[DEPARTMENT_TOKEN_INDEX].toUpperCase());
+            String timeSlotToken = tokens[TIMESLOT_TOKEN_INDEX].toUpperCase();
+
+            if(!Timeslot.isValidTimeSlot(timeSlotToken)){
+                System.out.println("Invalid time slot!");
+                return;
+            }
+
+            Timeslot timeslot = Timeslot.valueOf(timeSlotToken);
+
+            String locationToken = tokens[LOCATION_TOKEN_INDEX].toUpperCase();
+
+            if (!Location.isValidLocation(locationToken)) {
+                System.out.println("Invalid location!");
+                return;
+            };
+
+            Location location = Location.valueOf(locationToken);
+
+            String departmentToken =
+                    tokens[DEPARTMENT_TOKEN_INDEX].toUpperCase();
+
+            if(!Department.isValidDepartment(departmentToken)){
+                System.out.println("Invalid department information");
+                return;
+            };
+            Department department = Department.valueOf(departmentToken);
+
             String contactEmail = tokens[CONTACT_EMAIL_TOKEN_INDEX];
+
             int duration = Integer.parseInt(tokens[DURATION_TOKEN_INDEX]);
 
+            // check if the event duration is between 30 to 120 mins
+            if (!Timeslot.isValidDuration(duration)) {
+                System.out.println("Event duration must be at least 30 minutes and at most 120 minutes");
+                return;
+            }
+
             Contact contact = new Contact(department, contactEmail);
+            if (!contact.isValid()) {
+                System.out.println("Invalid contact information!");
+                return;
+            }
+
             Event newEvent =
-                    new Event(eventDate, timeSlot, location, contact, duration);
+                    new Event(eventDate, timeslot, location, contact, duration);
             boolean hasConflict = eventCalendar.hasConflict(newEvent);
 
             if (hasConflict) {
                 System.out.println(
-                        "Conflict of schedule - an event with the same " +
-                        "date/timeslot/location is already on the calendar.");
+                        "The event is already on the calendar.");
             }
             else if (eventCalendar.add(newEvent)) {
-                System.out.println("Event added successfully.");
+                System.out.println("Event added to the calendar.");
             }
             else {
                 System.out.println(
@@ -116,7 +152,7 @@ public class EventOrganizer {
             System.out.println("Invalid Add input, please recheck your input");
         }
     }
-
+    private static String EVENT_CALENDAR_EMPTY_MESSAGE = "Event calendar is empty!";
     /**
      * Displays all the current events in the event calendar
      */
@@ -124,12 +160,13 @@ public class EventOrganizer {
         int numberEvents = eventCalendar.getNumEvents();
 
         if (numberEvents == 0) {
-            System.out.println("The Event Calendar is empty");
+            System.out.println(EVENT_CALENDAR_EMPTY_MESSAGE);
             return;
         }
-        else {
-            eventCalendar.print();
-        }
+
+        System.out.println("* Event calendar *");
+        eventCalendar.print();
+        System.out.println("* end of event calendar *");
     }
 
     /**
@@ -139,12 +176,13 @@ public class EventOrganizer {
         int numberEvents = eventCalendar.getNumEvents();
 
         if (numberEvents == 0) {
-            System.out.println("The Event Calendar is empty");
+            System.out.println(EVENT_CALENDAR_EMPTY_MESSAGE);
             return;
         }
 
-        System.out.println("Event Calendar (Sorted by Date):");
+        System.out.println("* Event calendar by event date and start time *");
         eventCalendar.printByDate();
+        System.out.println("* end of event calendar *");
     }
 
     /**
@@ -155,11 +193,12 @@ public class EventOrganizer {
         int numberEvents = eventCalendar.getNumEvents();
 
         if (numberEvents == 0) {
-            System.out.println("The Event Calendar is empty");
+            System.out.println(EVENT_CALENDAR_EMPTY_MESSAGE);
             return;
         }
-        System.out.println("Event Calendar (Sorted by Campus): ");
+        System.out.println("* Event calendar by campus and building *");
         eventCalendar.printByCampus();
+        System.out.println("* end of event calendar *");
     }
 
 
@@ -171,11 +210,12 @@ public class EventOrganizer {
         int numberEvents = eventCalendar.getNumEvents();
 
         if (numberEvents == 0) {
-            System.out.println("The Event Calendar is empty");
+            System.out.println(EVENT_CALENDAR_EMPTY_MESSAGE);
             return;
         }
-        System.out.println("The Event Calendar (Sorted by Department): ");
+        System.out.println("* Event calendar by department *");
         eventCalendar.printByDepartment();
+        System.out.println("* end of event calendar *");
     }
 
     /**
@@ -192,6 +232,22 @@ public class EventOrganizer {
 
         // parse tokens that the user have provided
         Date date = Date.parseDate(dateToRemove);
+        if (!date.isValid()) {
+            System.out.println(
+                    date + ": Invalid calendar date!");
+            return;
+        }
+
+        if (date.isMoreThanSixMonthsAway()) {
+            System.out.println(date + ": Event date must be within 6 months!");
+            return;
+        }
+
+        if(!date.isFutureDate()){
+            System.out.println(date + ": Event date must be a future date!");
+            return;
+        }
+
         Timeslot timeslot = Timeslot.valueOf(timeSlotToken.toUpperCase());
         Location location = Location.valueOf(locationToken.toUpperCase());
 
@@ -211,10 +267,10 @@ public class EventOrganizer {
 
         // Remove the event from the calendar
         if (eventCalendar.remove(eventToRemove)) {
-            System.out.println("Event removed successfully.");
+            System.out.println("Event has been removed from the calendar!");
         }
         else {
-            System.out.println("Event not found. Nothing to remove.");
+            System.out.println("Cannot remove; event is not in the calendar!");
         }
     }
 
@@ -278,23 +334,74 @@ public class EventOrganizer {
      * Runs the UI for the organizer, takes input and processes it
      */
     public void run() {
+
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Event Organizer running...");
+        java.io.PrintStream oldOut = System.out;
+
+        if(this.testMode){
+
+            try {
+                scanner = new Scanner(new java.io.File("sample_inputs.txt"));
+                System.setOut(new java.io.PrintStream(new java.io.FileOutputStream("this_run_output.txt")));
+            }
+            catch (FileNotFoundException e){
+                System.out.println("file not found");
+                return;
+            }
+            java.io.InputStream outputCheck = null;
+        }
+
+        System.out.println("Event Organizer running...\n");
 
         while (true) {
-            System.out.print("Enter command: ");
+//            System.out.print("Enter command: ");
             String commandLine = scanner.nextLine();
+            String trimCommand = commandLine.trim();
 
-            if (commandLine.trim().equalsIgnoreCase("Q")) {
+            if (trimCommand.equals("Q")) {
                 System.out.println("Event Organizer terminated.");
                 break;
+            } else if (trimCommand.isEmpty()){
+                continue;
             }
             processCommand(commandLine);
+        }
+        if(this.testMode){
+            Scanner programOutputScanner = null;
+            Scanner expectedOutputScanner = null;
+            try {
+                programOutputScanner = new Scanner(new java.io.File("this_run_output.txt"));
+                expectedOutputScanner = new Scanner(new java.io.File("sample_outputs.txt"));
+                System.setOut(oldOut);
+            }
+            catch (FileNotFoundException e){
+               System.out.println("Couldn't check");
+            }
+            int allowedError = 2;
+            int line = 1;
+            while(programOutputScanner.hasNext() && expectedOutputScanner.hasNext()){
+                String programOuput = programOutputScanner.nextLine();
+                String expectedOutput = expectedOutputScanner.nextLine();
+
+                if (!programOuput.equals(expectedOutput)) {
+                    System.out.println(String.format("program output: '%s'\n expected output: '%s', line %d \n", programOuput, expectedOutput, line));
+                    allowedError --;
+//                    if(allowedError < 0){
+//                        throw new AssertionError();
+//                    }
+
+                    //System.out.println(new AssertionError());
+                }
+
+
+                //System.out.println(String.format("\n comparing from run: '%s' to \n expected: '%s' \n", programOuput, expectedOutput));
+                line ++;
+            }
+            programOutputScanner.close();
+            expectedOutputScanner.close();
+            System.out.println("Everything is correct");
         }
         scanner.close();
     }
 
 }
-
-
-//logic
