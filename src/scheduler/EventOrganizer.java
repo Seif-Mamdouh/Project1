@@ -163,9 +163,10 @@ public class EventOrganizer {
             System.out.println(EVENT_CALENDAR_EMPTY_MESSAGE);
             return;
         }
-        else {
-            eventCalendar.print();
-        }
+
+        System.out.println("* Event calendar *");
+        eventCalendar.print();
+        System.out.println("* end of event calendar *");
     }
 
     /**
@@ -228,6 +229,22 @@ public class EventOrganizer {
 
         // parse tokens that the user have provided
         Date date = Date.parseDate(dateToRemove);
+        if (!date.isValid()) {
+            System.out.println(
+                    date + ": Invalid calendar date!");
+            return;
+        }
+
+        if (date.isMoreThanSixMonthsAway()) {
+            System.out.println(
+                    date + ": Event date must be within 6 months!");
+            return;
+        }
+
+        if(!date.isFutureDate()){
+            System.out.println(date + ": Event date must be a future date!");
+        }
+
         Timeslot timeslot = Timeslot.valueOf(timeSlotToken.toUpperCase());
         Location location = Location.valueOf(locationToken.toUpperCase());
 
@@ -364,7 +381,7 @@ public class EventOrganizer {
                 String expectedOutput = expectedOutputScanner.nextLine();
 
                 if (!programOuput.equals(expectedOutput)) {
-                    System.out.println(String.format("program output: '%s', expected output: '%s', line %d", programOuput, expectedOutput, line));
+                    System.out.println(String.format("program output: '%s', \n expected output: '%s', line %d", programOuput, expectedOutput, line));
                     allowedError --;
                     if(allowedError < 0){
                         throw new AssertionError();

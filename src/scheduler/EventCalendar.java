@@ -8,7 +8,6 @@ package scheduler;
 public class EventCalendar {
     private Event[] events; //the array holding the list of events
     private int numEvents; //current number of events in the array
-
     final static int NOT_FOUND = -1;
     final static int EQUAL_IN_COMPARABLE = 0;
     final static int INITIAL_AND_ADDITIONAL_ARRAY_CAPACITY = 4;

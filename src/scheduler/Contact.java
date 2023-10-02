@@ -82,7 +82,7 @@ public class Contact {
      */
     @Override
     public String toString() {
-        return department.toString() + " - " + email;
+        return department.toString() + ", " + email;
     }
 
 }

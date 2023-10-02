@@ -10,7 +10,8 @@ public enum Location {
     ARC103("Allison Road Classroom", "Busch"),
     BE_AUD("Beck Hall", "Livingston"),
     TIL232("Tillett Hall", "Livingston"),
-    AB2225("Academic Building", "College Avenue");
+    AB2225("Academic Building", "College Avenue"),
+    MU302("Murray Hall", "College Avenue");
 
     private final String buildingName;
     private final String campusName;
@@ -48,7 +49,7 @@ public enum Location {
      * @return building name concatenated with campus name
      */
     public String toString() {
-        return this.buildingName + ", " + this.campusName;
+        return "@" + this.name() + " (" + this.buildingName + ", " + this.campusName + ")";
     }
 
     /**

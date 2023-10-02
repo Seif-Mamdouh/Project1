@@ -183,7 +183,7 @@ public class Date implements Comparable<Date> {
         int endYear = endDate.get(Calendar.YEAR);
         int endMonth = endDate.get(Calendar.MONTH);
 
-        return (long) (endYear - startYear) * MONTHS_IN_YEAR + (endMonth - startMonth);
+        return (endYear - startYear) * MONTHS_IN_YEAR + (endMonth - startMonth);
     }
 
 
@@ -233,25 +233,26 @@ public class Date implements Comparable<Date> {
         Date date4 = new Date(2024, 2, 29);
         Date date5 = new Date(2023, 13, 12);
         Date date6 = new Date(2023, 0, 12);
-        Date date7 = new Date(2023, 2, 29);
+        Date date7 = new Date(2024, 4, 22);
         Date date8 = new Date(-2023, 12, 2);
 
         // Test the isValid method
-        System.out.println("date1 is : " + date1.isValid());
-        System.out.println("date2 is : " + date2.isValid());
-        System.out.println("date3 is : " + date3.isValid());
-        System.out.println("date4 is: " + date4.isValid());
-        System.out.println("date5 is: " + date5.isValid());
-        System.out.println("date6 is: " + date6.isValid());
-        System.out.println("date7 is: " + date7.isValid());
-        System.out.println("date8 is: " + date8.isValid());
+//        System.out.println("date1 is : " + date1.isValid());
+//        System.out.println("date2 is : " + date2.isValid());
+//        System.out.println("date3 is : " + date3.isValid());
+//        System.out.println("date4 is: " + date4.isValid());
+//        System.out.println("date5 is: " + date5.isValid());
+//        System.out.println("date6 is: " + date6.isValid());
+//        System.out.println("date7 is: " + date7.isValid());
+//        System.out.println("date8 is: " + date8.isValid());
 
 
+        System.out.println(date7 + " is "+ date7.isMoreThanSixMonthsAway());
 
         // Test the compareTo method
-        System.out.println("Comparing date1 to date2: " + date1.compareTo(date2));
-        System.out.println("Comparing date2 to date3: " + date2.compareTo(date3));
-        System.out.println("Comparing date1 to date3: " + date1.compareTo(date3));
+//        System.out.println("Comparing date1 to date2: " + date1.compareTo(date2));
+//        System.out.println("Comparing date2 to date3: " + date2.compareTo(date3));
+//        System.out.println("Comparing date1 to date3: " + date1.compareTo(date3));
     }
 };
 

@@ -58,7 +58,7 @@ public enum Timeslot {
         String StringFormatWith2DigitPadding = "%02d";
         return Integer.toString(hour) + ":" +
                String.format(StringFormatWith2DigitPadding, minute) +
-               (amPm == Calendar.AM ? "AM" : "PM");
+               (amPm == Calendar.AM ? "am" : "pm");
     }
 
     /**
