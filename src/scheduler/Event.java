@@ -140,5 +140,132 @@ public class Event implements Comparable<Event> {
     public int getDuration() {
         return duration;
     }
+    public static void main(String [] args){
+        //Two dates are equal if time, date, and locations are the same
+
+        //times, dates, and locations not the same
+        Event notSame1 = new Event(
+                new Date(2023, 10, 2),
+                Timeslot.MORNING,
+                Location.HLL114,
+                new Contact(Department.EE, "a@rutgers.edu"),
+                35
+        );
+        Event notSame2 = new Event(
+                new Date(2023, 9, 2),
+                Timeslot.AFTERNOON,
+                Location.ARC103,
+                new Contact(Department.EE, "a@rutgers.edu"),
+                35
+        );
+        assert !notSame1.equals(notSame2);
+
+        //just time are the same
+        Event justTime1 = new Event(
+                new Date(2023, 9, 2),
+                Timeslot.AFTERNOON,
+                Location.ARC103,
+                new Contact(Department.EE, "a@rutgers.edu"),
+                35
+        );
+        Event justTime2 = new Event(
+                new Date(2023, 9, 3),
+                Timeslot.AFTERNOON,
+                Location.HLL114,
+                new Contact(Department.EE, "a@rutgers.edu"),
+                35
+        );
+        assert !justTime1.equals(justTime2);
+
+        //just date is the same
+        Event justDate1 = new Event(
+                new Date(2023, 9, 2),
+                Timeslot.AFTERNOON,
+                Location.ARC103,
+                new Contact(Department.EE, "a@rutgers.edu"),
+                35
+        );
+        Event justDate2 = new Event(
+                new Date(2023, 9, 2),
+                Timeslot.MORNING,
+                Location.HLL114,
+                new Contact(Department.EE, "a@rutgers.edu"),
+                35
+        );
+        assert !justDate1.equals(justDate2);
+
+        //just location is the same
+        Event justLocation1 = new Event(
+                new Date(2023, 9, 2),
+                Timeslot.AFTERNOON,
+                Location.ARC103,
+                new Contact(Department.EE, "a@rutgers.edu"),
+                35
+        );
+        Event justLocation2 = new Event(
+                new Date(2023, 9, 3),
+                Timeslot.MORNING,
+                Location.ARC103,
+                new Contact(Department.EE, "a@rutgers.edu"),
+                35
+        );
+        assert !justLocation1.equals(justLocation2);
+
+
+        //just time and date are the same
+        Event timeAndDate1 = new Event(
+                new Date(2023, 9, 2),
+                Timeslot.MORNING,
+                Location.ARC103,
+                new Contact(Department.EE, "a@rutgers.edu"),
+                35
+        );
+        Event timeAndDate2 = new Event(
+                new Date(2023, 9, 2),
+                Timeslot.MORNING,
+                Location.HLL114,
+                new Contact(Department.EE, "a@rutgers.edu"),
+                35
+        );
+        assert !timeAndDate1.equals(timeAndDate2);
+
+        //just date and location are the same
+        Event dateLocation1 = new Event(
+                new Date(2023, 9, 2),
+                Timeslot.AFTERNOON,
+                Location.ARC103,
+                new Contact(Department.EE, "a@rutgers.edu"),
+                35
+        );
+        Event dateLocation2 = new Event(
+                new Date(2023, 9, 2),
+                Timeslot.MORNING,
+                Location.ARC103,
+                new Contact(Department.EE, "a@rutgers.edu"),
+                35
+        );
+        assert !dateLocation1.equals(dateLocation2);
+
+        //time date and location are the same
+        Event same1 = new Event(
+                new Date(2023, 9, 2),
+                Timeslot.AFTERNOON,
+                Location.ARC103,
+                new Contact(Department.EE, "a@rutgers.edu"),
+                35
+        );
+        Event same2 = new Event(
+                new Date(2023, 9, 2),
+                Timeslot.AFTERNOON,
+                Location.ARC103,
+                new Contact(Department.EE, "a@rutgers.edu"),
+                35
+        );
+        assert same1.equals(same2);
+
+        System.out.println("tests pass");
+
+
+    }
 }
 
